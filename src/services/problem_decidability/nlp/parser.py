@@ -43,6 +43,7 @@ class Parser:
         self.setup_fallback_patterns()
 
     def setup_ml_models(self):
+        # W hugging face
         self.embedding_model = 'microsoft/codebert-base'
         self.tokenizer = AutoTokenizer.from_pretrained(self.embedding_model)
         self.model = AutoModel.from_pretrained(self.embedding_model)
