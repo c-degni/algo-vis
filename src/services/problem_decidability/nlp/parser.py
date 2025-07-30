@@ -1,8 +1,10 @@
+import numpy as np
 import spacy
 from dataclasses import dataclass
 from enum import Enum
 from typing import List, Dict
 from transformers import AutoTokenizer, AutoModel, pipeline
+import torch
 
 class ProblemEntity(Enum):
     DATA_STRUCTURE = 'data_structures'
@@ -51,3 +53,48 @@ class Parser:
             'zero-shot-classification',
             model = 'facebook/bart-large-mnli' 
         )
+
+    def setup_algoritmic_embeddings(self):
+        self.algorithm_concepts = {
+            'sorting':[],
+            'searching':[],
+            'two_pointers':[],
+            'dynamic_programming':[],
+            'graph_traversal':[],
+            'greedy':[],
+            'string_manipulation':[],
+        }
+
+        self.data_structure_concepts = {
+            'array':[],
+            'tree':[],
+            'graph':[],
+            'matrix':[],
+            'linked_list':[],
+            'stack':[],
+            'queue':[],
+            'heap':[],
+            'hash_table':[],
+        }
+
+        self.compute_concept_embeddings()
+
+    def compute_concept_embeddings(self):
+        self.concept_embeddings = {}
+        concepts = {**self.algorithm_concepts, **self.data_structure_concepts}
+
+        for concept_type, descriptions in concepts.items():
+            embeddings = []
+            for description in descriptions:
+                embedding = self.get_text_embedding(description)
+                embeddings.append(embedding)
+            
+            # Axis = 0 for mean across columns and not flat array
+            self.concept_embeddings[concept_type] = np.mean(embeddings, axis=0)
+
+    def get_text_embedding(self, text: str) -> np.ndarray:
+        inputs = self.tokenizer(text, return_tensors='pt', padding=True, truncation=True)
+        with torch.no_grad():
+            outputs = self.model(**inputs)
+            emedding = outputs.last_hidden_state[:, 0, :].numpy()
+        return embedding.flatten()
