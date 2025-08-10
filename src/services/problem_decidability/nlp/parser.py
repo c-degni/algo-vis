@@ -1,3 +1,4 @@
+import re
 import numpy as np
 import spacy
 from dataclasses import dataclass
@@ -5,6 +6,7 @@ from enum import Enum
 from typing import List, Dict
 from transformers import AutoTokenizer, AutoModel, pipeline
 import torch
+from sklearn.metrics.pairwise import cosine_similarity
 
 class ProblemEntity(Enum):
     DATA_STRUCTURE = 'data_structures'
@@ -96,5 +98,48 @@ class Parser:
         inputs = self.tokenizer(text, return_tensors='pt', padding=True, truncation=True)
         with torch.no_grad():
             outputs = self.model(**inputs)
-            emedding = outputs.last_hidden_state[:, 0, :].numpy()
+            embedding = outputs.last_hidden_state[:, 0, :].numpy()
         return embedding.flatten()
+    
+    def setup_fallback_patterns(self, problem_text: str) -> ParseResult:
+        cleaned_text = self.preprocess_text(problem_text)
+        doc = self.nlp(cleaned_text)
+
+        entities = self._extract_entities(doc, cleaned_text)
+        keywords = self._extract_keywords(doc)
+        constraints = self._extract_constraints(cleaned_text)
+        complexity_hints = self._extract_complexity_hints(cleaned_text)
+        sentence_structure = self._analyze_sentence_structure(doc)
+        problem_intent = self._identify_problem_intent(doc, entities)
+
+        confidence_score = self._calculate_confidence(entities, keywords, constraints)
+
+        return ParseResult(
+            entities=entities,
+            keywords=keywords,
+            constraints=constraints,
+            complexity_hints=complexity_hints,
+            sentence_structure=sentence_structure,
+            problem_intent=problem_intent,
+            confidence_score=confidence_score,
+        )
+    
+    def preprocess_text(self, text: str) -> str:
+        text = re.sub(r'\s+', ' ', text.lower()).strip()
+        text = re.sub(r'o\(([^)]+)\)', r'O(\1)', text, flags=re.IGNORECASE)
+        return
+    
+    def extract_entities(self, doc, text: str) -> List[ParsedEntity]:
+        entities = []
+        problem_embedding = self.get_text_embedding()
+
+        # Using cosine similarity: comparing the similarity of two vectors via the cosine angle between those 
+        # vectors
+        similarities = {}
+        for concept, concept_embedding in self.concept_embeddings.items():
+            similarity = cosine_similarity(
+                problem_embedding.reshape(1, -1),
+                concept_embedding.reshape(1, -1)
+            )[0][0]
+            similarities[concept] = similarity
+            
