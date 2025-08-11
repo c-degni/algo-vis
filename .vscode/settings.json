@@ -70,6 +70,8 @@
         "__assert": "cpp",
         "atomic": "cpp",
         "filesystem": "cpp",
-        "system_error": "cpp"
+        "system_error": "cpp",
+        "any": "cpp",
+        "span": "cpp"
     }
 }
