@@ -4,23 +4,23 @@
 #include <vector>
 #include <string>
 #include <chrono>
-#include <nholmann/json.hpp>
+#include <nlohmann/json.hpp>
 
 struct ExecutionStep {
     std::string operation;
     std::string description;
-    nholmann::json state_snapshot;
+    nlohmann::json state_snapshot;
     std::chrono::high_resolution_clock::time_point timestamp;
     std::vector<int> highlights;
 
-    nholmann::json toJson() {
+    nlohmann::json toJson() {
         return {
             {"operation", operation},
             {"description", description},
             {"state", state_snapshot},
             {"timestamp", std::chrono::duration_cast<std::chrono::milliseconds>(
                 timestamp.time_since_epoch()).count()},
-            {"highlights", highlighted_elements}
+            {"highlights", highlights}
         };
     }
 };
@@ -33,6 +33,6 @@ class ExecutionTracer {
         void recordStep(ExecutionStep &step);
         std::vector<ExecutionStep> getTrace();
         std::string getTraceJson();
-}
+};
 
 #endif

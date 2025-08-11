@@ -9,7 +9,7 @@ std::vector<ExecutionStep> ExecutionTracer::getTrace() {
 }
 
 std::string ExecutionTracer::getTraceJson() {
-    nholmann::json tr = nholmann::json::array();
+    nlohmann::json tr = nlohmann::json::array();
     for(ExecutionStep &step : tr) {
         trace.push_back(step.toJson);
     }
