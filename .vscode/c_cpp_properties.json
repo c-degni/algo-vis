@@ -4,7 +4,8 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/opt/homebrew/opt/nlohmann-json/include"
+                "/opt/homebrew/opt/nlohmann-json/include",
+                "/opt/homebrew/opt/node/include/node"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",

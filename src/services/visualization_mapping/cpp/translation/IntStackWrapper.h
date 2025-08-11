@@ -7,12 +7,12 @@ class IntStackWrapper : public StackWrapperBase<int> {
     public:
         static Napi::Object Init(Napi::Env env, Napi::Object exports);
 
-        IntStackWrapper(const Napi::CallbackInfo& info) : StackWrapperBase<int>(info) {}
+        IntStackWrapper(Napi::CallbackInfo& info) : StackWrapperBase<int>(info) {}
 
         Napi::Value Push(Napi::CallbackInfo &info);
         Napi::Value Pop(Napi::CallbackInfo &info);
         Napi::Value Top(Napi::CallbackInfo &info);
-}
+};
 
 Napi::Object Init(Napi::Env env, Napi::Object exports);
 

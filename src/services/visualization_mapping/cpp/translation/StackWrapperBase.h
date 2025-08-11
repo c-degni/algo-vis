@@ -18,23 +18,27 @@ class StackWrapperBase : public Napi::ObjectWrap<StackWrapperBase<T>> {
         Napi::Value Clear(Napi::CallbackInfo &info);
 };
 
-Napi::Value Size(Napi::CallbackInfo &info) {
+template<typename T>
+Napi::Value StackWrapperBase<T>::Size(Napi::CallbackInfo &info) {
     Napi::Env env = info.Env();
     return Napi::Number::New(env, stack.size());
 }
 
-Napi::Value Empty(Napi::CallbackInfo &info) {
+template<typename T>
+Napi::Value StackWrapperBase<T>::Empty(Napi::CallbackInfo &info) {
     Napi::Env env = info.Env();
     return Napi::Number::New(env, stack.isEmpty());
 }
 
-Napi::Value GetTrace(Napi::CallbackInfo &info) {
+template<typename T>
+Napi::Value StackWrapperBase<T>::GetTrace(Napi::CallbackInfo &info) {
     Napi::Env env = info.Env();
     std::string traceJson = stack.getExecutionTrace();
     return Napi::String::New(env, traceJson);
 }
 
-Napi::Value Clear(Napi::CallbackInfo &info) {
+template<typename T>
+Napi::Value StackWrapperBase<T>::Clear(Napi::CallbackInfo &info) {
     Napi::Env env = info.Env();
     stack.clear();
     return env.Undefined();

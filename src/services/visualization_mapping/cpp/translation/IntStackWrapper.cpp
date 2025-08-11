@@ -11,6 +11,10 @@ static Napi::Object Init(Napi::Env env, Napi::Object exports) {
         InstanceMethod("getTrace", &IntStackWrapper::GetTrace)
     });
 
+    Napi::FunctionReference *constructor = new Napi::FunctionReference();
+    *constructor = Napi::Persistent(f);
+    env.SetInstanceData(constructor);
+
     exports.Set("IntStack", f);
     return exports;
 }
