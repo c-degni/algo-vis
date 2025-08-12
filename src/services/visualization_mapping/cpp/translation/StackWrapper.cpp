@@ -98,4 +98,4 @@ Napi::Object StackModule_Init(Napi::Env env, Napi::Object exports) {
     return exports;
 }
 
-NODE_API_MODULE(cpp_stack, StackModule_Init)
+// NODE_API_MODULE(cpp_stack, StackModule_Init)

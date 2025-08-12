@@ -33,6 +33,12 @@ class StackController {
                 case 'top': 
                     stack.top(); 
                     break;
+                case 'size': 
+                    stack.size(); 
+                    break;
+                case 'empty': 
+                    stack.isEmpty(); 
+                    break;
                 case 'clear': 
                     stack.clear(); 
                     break;
@@ -43,3 +49,5 @@ class StackController {
         res.json({ trace, dataType });
     }
 }
+
+module.exports = StackController;
