@@ -90,13 +90,16 @@ export const StackVisualizer: React.FC<StackVisualizerProps> = ({
     if (elements.length > 0) {
       container
         .append("polygon")
-        .attr("points", `${elementWidth + 10},${height - 60 - elements.length * elementHeight + elementHeight/2 - 5} ${elementWidth + 20},${height - 60 - elements.length * elementHeight + elementHeight/2} ${elementWidth + 10},${height - 60 - elements.length * elementHeight + elementHeight/2 + 5}`)
+        .attr(
+          "points", 
+          `${elementWidth + 10}, 
+            ${height - 60 - elements.length * elementHeight + elementHeight / 2 - 5} ${elementWidth + 20}, ${height - 60 - elements.length * elementHeight + elementHeight / 2} ${elementWidth + 10}, ${height - 60 - elements.length * elementHeight + elementHeight / 2 + 5}`)
         .attr("fill", "#e74c3c");
         
       container
         .append("text")
         .attr("x", elementWidth + 25)
-        .attr("y", height - 60 - elements.length * elementHeight + elementHeight/2)
+        .attr("y", height - 60 - elements.length * elementHeight + elementHeight / 2)
         .attr("dominant-baseline", "middle")
         .attr("fill", "#e74c3c")
         .attr("font-weight", "bold")
