@@ -1,6 +1,3 @@
-#ifndef STACK_WRAPPER_H
-#define STACK_WRAPPER_H
-
 #include  <napi.h>
 #include "TrackedStack.h"
 
@@ -82,21 +79,23 @@ class TypeName##StackWrapper : public Napi::ObjectWrap<TypeName##StackWrapper> {
             std::string json = stack.getExecutionTrace();                                                               \
             return Napi::String::New(env, json);                                                                        \
         }                                                                                                               \
-};                                                                                                                                                                                                    
+};                                        
+
+// Add string stack wrapper def (could be macro to fit in with rest idk yet)
 
 TYPED_STACK_WRAPPER(Int, int, IsNumber, As<Napi::Number>().Int32Value, Napi::Number::New)
 TYPED_STACK_WRAPPER(Double, double, IsNumber, As<Napi::Number>().DoubleValue, Napi::Number::New)
 TYPED_STACK_WRAPPER(Float, float, IsNumber, As<Napi::Number>().FloatValue, Napi::Number::New)
 TYPED_STACK_WRAPPER(Bool, bool, IsBoolean, As<Napi::Boolean>().Value, Napi::Boolean::New)
+// Add string stack wrapper instantiation
 
-Napi::Object Init(Napi::Env env, Napi::Object exports) {
+Napi::Object StackModule_Init(Napi::Env env, Napi::Object exports) {
     IntStackWrapper::Init(env, exports);
     DoubleStackWrapper::Init(env, exports);
     FloatStackWrapper::Init(env, exports);
     BoolStackWrapper::Init(env, exports);
+    // Add string stack wrapper init
     return exports;
 }
 
-NODE_API_MODULE(cpp_stack, Init)
-
-#endif
+NODE_API_MODULE(cpp_stack, StackModule_Init)
