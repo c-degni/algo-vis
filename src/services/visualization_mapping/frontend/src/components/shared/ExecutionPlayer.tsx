@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StackVisualizer } from "./data_structures/StackVisualizer";
+import { StackVisualizer } from "../visualizers/StackVisualizer";
 
 const CppStackTester: React.FC = () => {
   const [executionTrace, setExecutionTrace] = useState<any[]>([]);

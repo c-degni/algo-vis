@@ -1,6 +1,20 @@
 {
+  "name": "algo-vis",
+  "version": "1.0.0",
+  "description": "Interactive data structure and algorithm visualizer",
+  "main": "server.js",
+  "scripts": {
+    "build-cpp": "node-gyp rebuild",
+    "start": "node server.js",
+    "dev": "concurrently \"npm run start\" \"npm run dev:frontend\"",
+    "dev:frontend": "cd src/services/visualization_mapping/frontend && npm start",
+    "setup": "npm install && npm run build-cpp && cd src/services/visualization_mapping/frontend && npm install",
+    "test": "node scripts/test-cpp.js",
+    "clean": "rimraf build && rimraf src/services/visualization_mapping/frontend/build"
+  },
   "dependencies": {
     "d3": "^7.9.0",
+    "lucide-react": "^0.539.0",
     "node-addon-api": "^8.5.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
