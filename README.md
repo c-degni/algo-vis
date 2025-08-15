@@ -13,22 +13,24 @@ This project combines C++ data structure implementations with a React frontend t
 - __Frontend:__ React components with D3.js visualizations and playback controls
 
 ## Project Structure
-algo-vis/
-├── src/services/visualization_mapping/
-│   ├── api/
-│   │   ├── controllers/StackController.js    # Business logic
-│   │   └── routes/data-structures.js         # API endpoints
-│   ├── cpp/
-│   │   ├── core/ExecutionTracer.{h,cpp}      # Execution recording
-│   │   ├── data_structures/TrackedStack.h    # Stack with tracing
-│   │   └── bindings/stack_wrapper.cpp        # Node.js integration
-│   └── components/
-│       ├── shared/ExecutionPlayer.tsx        # Playback controls
-│       ├── shared/StepBuilder.tsx             # Operation builder
-│       └── visualizers/StackVisualizer.tsx   # D3.js stack animation
-├── build/Release/data_structures.node        # Compiled C++ addon
-├── binding.gyp                               # C++ build configuration
-└── server.js                                 # Express server
+__:plug: API Layer__
+- `controllers/StackController.js` - Business logic & validation
+- `routes/data-structures.js` - HTTP endpoints & routing
+
+__:bolt: C++ Core__
+- `core/ExecutionTracer.{h,cpp}` - Records operation steps
+- `data_structures/TrackedStack.h` - Stack with execution tracing
+- `bindings/stack_wrapper.cpp` - Node.js integration bridge
+
+__:react: Frontend Components__
+- `shared/ExecutionPlayer.tsx` - Playback controls & timeline
+- `shared/StepBuilder.tsx` - Interactive operation builder  
+- `visualizers/StackVisualizer.tsx` - D3.js stack animations
+
+__:hammer: Build System__
+- `build/Release/data_structures.node` - Compiled C++ addon
+- `binding.gyp` - C++ compilation configuration
+- `server.js` - Express server entry point
 
 ## Features
 - __Interactive Operation Builder:__ Add, edit, and sequence stack operations
