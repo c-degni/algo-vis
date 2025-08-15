@@ -25,10 +25,17 @@ class StackController {
             }
     
             operations.forEach((op, index) => {
-                console.log(`Processing operation ${index}:`, op);
+                // console.log(`Processing operation ${index}:`, op);
+                console.log(`Operation ${index}:`, {
+                    type: op.type,
+                    value: op.value,
+                    valueType: typeof op.value,
+                    isNumber: typeof op.value === 'number',
+                    isInteger: Number.isInteger(op.value)
+                });
                 switch (op.type) {
                     case 'push': 
-                        stack.push(parseInt(op.val, 10)); 
+                        stack.push(op.value); 
                         break;
                     case 'pop': 
                         stack.pop(); 

@@ -135,7 +135,7 @@ export default function ExecutionPlayer({
       )}
 
       {/* Progress Bar */}
-      <div className="mb-6">
+      {/* <div className="mb-6">
         <div className="flex items-center justify-between mb-2 text-sm text-gray-600">
           <span>Progress</span>
           <span>{Math.round(progress)}%</span>
@@ -160,6 +160,56 @@ export default function ExecutionPlayer({
             className="absolute top-0 left-0 w-full h-2 opacity-0 cursor-pointer"
           />
         </div>
+      </div> */}
+      {/* Segmented Progress Bar */}
+      <div className="mb-6">
+        <div className="flex items-center justify-between mb-2 text-sm text-gray-600">
+          <span>Progress</span>
+          <span>Step {currentStep + 1} of {trace.length}</span>
+        </div>
+        <div className="relative">
+          {/* Segmented progress bar */}
+          <div className="flex h-3 bg-gray-200 rounded-full overflow-hidden">
+            {trace.map((step, index) => {
+              const isCompleted = index < currentStep;
+              const isCurrent = index === currentStep;
+              const segmentWidth = trace.length > 0 ? (100 / trace.length) : 0;
+              
+              return (
+                <div
+                  key={index}
+                  className={`transition-all duration-300 ${
+                    isCompleted ? 'bg-green-500' : isCurrent ? 'bg-blue-500' : 'bg-gray-300'
+                  } ${index > 0 ? 'border-l border-white' : ''}`}
+                  style={{ width: `${segmentWidth}%` }}
+                  title={`Step ${index + 1}: ${step.operation}`}
+                />
+              );
+            })}
+          </div>
+          <label htmlFor="progress-steps-slider" className="sr-only">
+            Progress steps slider
+          </label>
+          <input id='progress-steps-slider' className="absolute top-0 left-0 w-full h-3 opacity-0 cursor-pointer" />
+        </div>
+        
+        {/* Operation labels below progress bar */}
+        {trace.length > 0 && trace.length <= 10 && (
+          <div className="flex justify-between mt-2 text-xs text-gray-500">
+            {trace.map((step, index) => (
+              <span 
+                key={index} 
+                className={`cursor-pointer hover:text-gray-700 ${
+                  index === currentStep ? 'font-semibold text-blue-600' : ''
+                }`}
+                onClick={() => setCurrentStep(index)}
+                title={step.description}
+              >
+                {step.operation}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Control Panel */}

@@ -16,6 +16,7 @@ export default function StackPage() {
     const [currentState, setCurrentState] = useState<any>(null);
     const [currentHighlights, setCurrentHighlights] = useState<number[]>([]);
     const [isExecuting, setIsExecuting] = useState(false);
+    const [dataType, setDataType] = useState<'int' | 'double' | 'float' | 'bool'>('int');
 
     const handleExecuteOperations = useCallback(async (operations: any[]) => {
         setIsExecuting(true);
@@ -68,9 +69,37 @@ export default function StackPage() {
                 </p>
             </div>
 
+            {/* Data Type Selector */}
+            <div className="bg-white rounded-lg shadow-lg p-6">
+                <h1 className="text-3xl font-bold text-gray-800 mb-4">Stack Visualizer</h1>
+                <div className="flex items-center space-x-4 mb-4">
+                    <label 
+                        className="text-sm font-medium text-gray-700"
+                        htmlFor='dataType'
+                    >
+                        Data Type:
+                    </label>
+                    <select 
+                        id='dataType'
+                        value={dataType} 
+                        onChange={(e) => setDataType(e.target.value as any)}
+                        className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    >
+                        <option value="int">Integer</option>
+                        <option value="double">Double</option>
+                        <option value="float">Float</option>
+                        <option value="bool">Boolean</option>
+                    </select>
+                </div>
+                <p className="text-gray-600">
+                    Build a sequence of stack operations and watch them execute step by step.
+                </p>
+            </div>
+
+
             <InteractiveStepBuilder
                 dataStructureType="stack"
-                dataType="int"
+                dataType={dataType}
                 onExecute={handleExecuteOperations}
                 isExecuting={isExecuting}
             />
