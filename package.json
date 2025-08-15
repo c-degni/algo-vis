@@ -6,21 +6,50 @@
   "scripts": {
     "build-cpp": "node-gyp rebuild",
     "start": "node server.js",
-    "dev": "concurrently \"npm run start\" \"npm run dev:frontend\"",
-    "dev:frontend": "cd src/services/visualization_mapping/frontend && npm start",
-    "setup": "npm install && npm run build-cpp && cd src/services/visualization_mapping/frontend && npm install",
+    "dev": "concurrently \"npm run start\" \"npm run start:react\"",
+    "start:react": "react-scripts start",
+    "dev:frontend": "npm run start:react",
+    "build:react": "react-scripts build",
+    "setup": "npm install && npm run build-cpp",
     "test": "node scripts/test-cpp.js",
-    "clean": "rimraf build && rimraf src/services/visualization_mapping/frontend/build"
+    "clean": "rimraf build && rimraf rimraf build:react"
   },
   "dependencies": {
+    "concurrently": "^9.2.0",
+    "cors": "^2.8.5",
     "d3": "^7.9.0",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
     "lucide-react": "^0.539.0",
+    "morgan": "^1.10.1",
     "node-addon-api": "^8.5.0",
+    "path": "^0.12.7",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.8.0",
+    "react-scripts": "^5.0.1"
   },
   "devDependencies": {
+    "@tailwindcss/cli": "^4.1.11",
+    "@types/node": "^24.3.0",
     "@types/react": "^18.3.23",
-    "@types/react-dom": "^18.3.7"
+    "@types/react-dom": "^18.3.7",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.11",
+    "typescript": "^5.9.2"
+  },
+  "proxy": "http://localhost:3001",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

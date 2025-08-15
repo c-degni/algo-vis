@@ -72,6 +72,7 @@
         "filesystem": "cpp",
         "system_error": "cpp",
         "any": "cpp",
-        "span": "cpp"
+        "span": "cpp",
+        "type_traits": "cpp"
     }
 }

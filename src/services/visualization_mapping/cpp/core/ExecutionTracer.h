@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include <chrono>
-#include <nlohmann/json.hpp>
+#include "json.hpp"
 
 struct ExecutionStep {
     std::string operation;

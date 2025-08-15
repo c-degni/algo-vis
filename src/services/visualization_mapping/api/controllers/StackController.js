@@ -1,4 +1,4 @@
-const ds = require("../../../build/Release/data_structures");
+const ds = require("../../../../../build/Release/data_structures");
 
 class StackController {
     static async executeOperations(req, res) {
