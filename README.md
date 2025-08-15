@@ -13,16 +13,16 @@ This project combines C++ data structure implementations with a React frontend t
 - __Frontend:__ React components with D3.js visualizations and playback controls
 
 ## Project Structure
-__:plug: API Layer__
+__:electric_plug: API Layer__
 - `controllers/StackController.js` - Business logic & validation
 - `routes/data-structures.js` - HTTP endpoints & routing
 
-__:bolt: C++ Core__
+__:zap: C++ Core__
 - `core/ExecutionTracer.{h,cpp}` - Records operation steps
 - `data_structures/TrackedStack.h` - Stack with execution tracing
 - `bindings/stack_wrapper.cpp` - Node.js integration bridge
 
-__:react: Frontend Components__
+__:star2: Frontend Components__
 - `shared/ExecutionPlayer.tsx` - Playback controls & timeline
 - `shared/StepBuilder.tsx` - Interactive operation builder  
 - `visualizers/StackVisualizer.tsx` - D3.js stack animations
