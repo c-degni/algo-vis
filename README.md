@@ -13,7 +13,6 @@ This project combines C++ data structure implementations with a React frontend t
 - __Frontend:__ React components with D3.js visualizations and playback controls
 
 ## Project Structure
-```mermaid
 algo-vis/
 ├── src/services/visualization_mapping/
 │   ├── api/
@@ -30,7 +29,6 @@ algo-vis/
 ├── build/Release/data_structures.node        # Compiled C++ addon
 ├── binding.gyp                               # C++ build configuration
 └── server.js                                 # Express server
-```
 
 ## Features
 - __Interactive Operation Builder:__ Add, edit, and sequence stack operations
