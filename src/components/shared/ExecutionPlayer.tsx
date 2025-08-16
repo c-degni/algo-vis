@@ -134,33 +134,6 @@ export default function ExecutionPlayer({
         </div>
       )}
 
-      {/* Progress Bar */}
-      {/* <div className="mb-6">
-        <div className="flex items-center justify-between mb-2 text-sm text-gray-600">
-          <span>Progress</span>
-          <span>{Math.round(progress)}%</span>
-        </div>
-        <div className="relative">
-          <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-            <div 
-              className="h-full bg-blue-500 transition-all duration-300 ease-out"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-          <label htmlFor="progress-slider" className="sr-only">
-            Progress slider
-          </label>
-          <input
-            id="progress-slider"
-            type="range"
-            min="0"
-            max={Math.max(0, trace.length - 1)}
-            value={currentStep}
-            onChange={handleSliderChange}
-            className="absolute top-0 left-0 w-full h-2 opacity-0 cursor-pointer"
-          />
-        </div>
-      </div> */}
       {/* Segmented Progress Bar */}
       <div className="mb-6">
         <div className="flex items-center justify-between mb-2 text-sm text-gray-600">
