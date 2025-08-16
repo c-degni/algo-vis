@@ -12,7 +12,7 @@ export default function App() {
                         <div className="flex justify-between h-16">
                             <div className="flex items-center">
                             <Link to="/" className="text-xl font-bold text-gray-800">
-                                Data Structure Visualizer
+                                Algo-Vis
                             </Link>
                             </div>
                             <div className="flex items-center space-x-4">
@@ -51,10 +51,10 @@ function HomePage() {
     return (
         <div className="text-center">
             <h1 className="text-4xl font-bold text-gray-900 mb-8">
-                Interactive Data Structure Visualizer
+                Interactive Data Structure + Algorithm Visualizer
             </h1>
             <p className="text-xl text-gray-600 mb-8">
-                Learn data structures through interactive visualization
+                Learn data structures and algorithms through interactive visualizations
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
                 <Link 
@@ -72,5 +72,3 @@ function HomePage() {
         </div>
     );
 }
-
-// export default App;

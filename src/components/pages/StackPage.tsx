@@ -1,6 +1,6 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import ExecutionPlayer from '../shared/ExecutionPlayer';
-import InteractiveStepBuilder from '../shared/StepBuilder';
+import StepBuilder from '../shared/StepBuilder';
 import StackVisualizer from '../visualizers/data_structures/StackVisualizer';
 
 interface ExecutionStep {
@@ -18,6 +18,12 @@ export default function StackPage() {
     const [isExecuting, setIsExecuting] = useState(false);
     const [dataType, setDataType] = useState<'int' | 'double' | 'float' | 'bool'>('int');
 
+    useEffect(() => {
+        setTrace([]);
+        setCurrentState(null);
+        setCurrentHighlights([]);
+    }, [dataType]);
+
     const handleExecuteOperations = useCallback(async (operations: any[]) => {
         setIsExecuting(true);
         try {
@@ -27,7 +33,7 @@ export default function StackPage() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    dataType: 'int',
+                    dataType: dataType,
                     operations: operations.map(op => ({
                         type: op.type,
                         value: op.value
@@ -53,7 +59,7 @@ export default function StackPage() {
         } finally {
             setIsExecuting(false);
         }
-    }, []);
+    }, [dataType]);
 
     const handleStepChange = useCallback((step: ExecutionStep, stepIndex: number) => {
         setCurrentState(step.state);
@@ -62,13 +68,6 @@ export default function StackPage() {
 
     return (
         <div className="space-y-6">
-            <div className="bg-white rounded-lg shadow-lg p-6">
-                <h1 className="text-3xl font-bold text-gray-800 mb-4">Stack Visualizer</h1>
-                <p className="text-gray-600">
-                    Build a sequence of stack operations and watch them execute step by step.
-                </p>
-            </div>
-
             {/* Data Type Selector */}
             <div className="bg-white rounded-lg shadow-lg p-6">
                 <h1 className="text-3xl font-bold text-gray-800 mb-4">Stack Visualizer</h1>
@@ -97,7 +96,8 @@ export default function StackPage() {
             </div>
 
 
-            <InteractiveStepBuilder
+            <StepBuilder
+                key={dataType}
                 dataStructureType="stack"
                 dataType={dataType}
                 onExecute={handleExecuteOperations}
