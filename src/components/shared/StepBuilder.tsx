@@ -102,7 +102,6 @@ export default function StepBuilder({
 
     useEffect(() => {
         setOperations(prev => prev.filter(op => {
-            if (op.value === undefined || op.value === null) return true;
             if (!op.value) return true; // Keep ops without vals like pop and clear
             
             const parsedVal = parseValue(op.value.toString(), dataType);
