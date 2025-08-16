@@ -1,52 +1,77 @@
-const ds = require("../../../build/Release/data_structures");
+const ds = require("../../../../../build/Release/data_structures");
 
 class StackController {
     static async executeOperations(req, res) {
-        const { operations, dataType = "int" } = req.body;
-
-        let stack;
-        switch (dataType.toLowerCase()) {
-            case "int":
-                stack = new ds.IntStack();
-                break;
-            case "double":
-                stack = new ds.DoubleStack();
-                break;
-            case "float":
-                stack = new ds.FloatStack();
-                break;
-            case "bool":
-                stack = new ds.BoolStack();
-                break; 
-            default:
-                return res.status(400).json({ error: 'Unsupported data type' });
-        }
-
-        operations.forEach(op => {
-            switch (op.type) {
-                case 'push': 
-                    stack.push(op.val); 
+        try {
+            console.log("✅ Received request:", req.body);
+            const { operations, dataType = "int" } = req.body;
+    
+            let stack;
+            switch (dataType.toLowerCase()) {
+                case "int":
+                    stack = new ds.IntStack();
                     break;
-                case 'pop': 
-                    stack.pop(); 
+                case "double":
+                    stack = new ds.DoubleStack();
                     break;
-                case 'top': 
-                    stack.top(); 
+                case "float":
+                    stack = new ds.FloatStack();
                     break;
-                case 'size': 
-                    stack.size(); 
-                    break;
-                case 'empty': 
-                    stack.isEmpty(); 
-                    break;
-                case 'clear': 
-                    stack.clear(); 
-                    break;
+                case "bool":
+                    stack = new ds.BoolStack();
+                    break; 
+                default:
+                    return res.status(400).json({ error: 'Unsupported data type' });
             }
-        });
+    
+            operations.forEach((op, index) => {
+                // console.log(`Processing operation ${index}:`, op);
+                console.log(`Operation ${index}:`, {
+                    type: op.type,
+                    value: op.value,
+                    valueType: typeof op.value,
+                    isNumber: typeof op.value === 'number',
+                    isInteger: Number.isInteger(op.value)
+                });
+                switch (op.type) {
+                    case 'push': 
+                        stack.push(op.value); 
+                        break;
+                    case 'pop': 
+                        stack.pop(); 
+                        break;
+                    case 'top': 
+                        stack.top(); 
+                        break;
+                    case 'size': 
+                        stack.size(); 
+                        break;
+                    case 'empty': 
+                        stack.isEmpty(); 
+                        break;
+                    case 'clear': 
+                        stack.clear(); 
+                        break;
+                }
+            });
 
-        const trace = JSON.parse(stack.getTrace());
-        res.json({ trace, dataType });
+            
+            const trace = JSON.parse(stack.getTrace());
+            console.log("✅ Generated trace with", trace.length, "steps");
+    
+            res.json({ 
+                trace, 
+                dataStructure: "stack",
+                dataType 
+            });
+            
+        } catch (error) {
+            console.error("❌ StackController error:", error);
+            res.status(500).json({ 
+                error: error.message,
+                stack: error.stack 
+            });
+        }
     }
 }
 

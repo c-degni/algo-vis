@@ -1,9 +1,12 @@
-#ifndef TRACKED_STACK_H
-#define TRACKED_STACK_H
-
+// #ifndef TRACKED_STACK_H
+// #define TRACKED_STACK_H
+#pragma once
 #include <stack>
 #include <vector>
+#include <memory>
 #include "ExecutionTracer.h"
+#include <optional>
+
 
 template<typename T>
 class TrackedStack {
@@ -14,7 +17,7 @@ class TrackedStack {
         void recordOp(
             const std::string &op, 
             const std::string &desc, 
-            const std::vector<int> &highlights = {});
+            const std::vector<int> &highlights = {}) const;
 
     public:
         TrackedStack() {
@@ -23,12 +26,12 @@ class TrackedStack {
         }
 
         void push(const T& val);
-        T pop();
-        T top();
-        bool isEmpty();
-        int size();
-        std::string getExecutionTrace();
-        std::vector<T> getCurrentState();
+        std::optional<T> pop();
+        std::optional<T> top();
+        bool isEmpty() const;
+        int size() const;
+        std::string getExecutionTrace() const;
+        std::vector<T> getCurrentState() const;
         void clear();
 };
 
@@ -36,7 +39,7 @@ template<typename T>
 void TrackedStack<T>::recordOp(
     const std::string &op, 
     const std::string &desc, 
-    const std::vector<int> &highlights = {})
+    const std::vector<int> &highlights) const
 {
     ExecutionStep step;
     step.operation = op;
@@ -44,7 +47,7 @@ void TrackedStack<T>::recordOp(
     step.timestamp = std::chrono::high_resolution_clock::now();
     step.highlights = highlights;
 
-    T state = getCurrentState();
+    std::vector<T> state = getCurrentState();
     step.state_snapshot = {
         {"elements", state},
         {"size", stack.size()},
@@ -56,7 +59,7 @@ void TrackedStack<T>::recordOp(
 template<typename T>
 void TrackedStack<T>::push(const T& val) {
     stack.push(val);
-    record_op(
+    recordOp(
         "push", 
         "Pushed " + std::to_string(val), 
         {static_cast<int>(stack.size() - 1)}
@@ -64,33 +67,31 @@ void TrackedStack<T>::push(const T& val) {
 }
 
 template<typename T>
-T TrackedStack<T>::pop() {
-    if (stack.isEmpty()) {
-        record_op(
+std::optional<T> TrackedStack<T>::pop() {
+    if (stack.empty()) {
+        recordOp(
             "stack underflow", 
             "Attempted to pop from empty stack"
         );
-        throw std::runtime_error("Stack is empty");
+        return std::nullopt;
     }
     
     T val = stack.top();
     stack.pop();
-    record_op(
+    recordOp(
         "pop", 
-        "Popped " + std::to_string(value), 
-        {static_cast<int>(stack_.size())}
+        "Popped " + std::to_string(val), 
+        {static_cast<int>(stack.size())}
     );
     return val;
 }
 
 template<typename T>
-T TrackedStack<T>::top() {
-    if (stack.isEmpty()) {
-        throw std::runtime_error("Stack is empty");
-    }
+std::optional<T> TrackedStack<T>::top() {
+    if (stack.empty()) return std::nullopt;
 
     T val = stack.top();
-    record_op(
+    recordOp(
         "peek", 
         "Peeked at top: " + std::to_string(val)
     );
@@ -98,9 +99,9 @@ T TrackedStack<T>::top() {
 }
 
 template<typename T>
-bool TrackedStack<T>::isEmpty() {
+bool TrackedStack<T>::isEmpty() const {
     bool empty = stack.empty();
-    record_op(
+    recordOp(
         "check_empty", 
         "Checked if empty: " + std::string(empty ? "true" : "false")
     );
@@ -108,9 +109,9 @@ bool TrackedStack<T>::isEmpty() {
 }
 
 template<typename T>
-int TrackedStack<T>::size() {
+int TrackedStack<T>::size() const {
     int s = stack.size();
-    record_op(
+    recordOp(
         "Size:", 
         std::to_string(s)
     );
@@ -118,12 +119,12 @@ int TrackedStack<T>::size() {
 }
 
 template<typename T>
-std::string TrackedStack<T>::getExecutionTrace() {
+std::string TrackedStack<T>::getExecutionTrace() const {
     return tracer->getTraceJson();
 }
 
 template<typename T>
-std::vector<T> TrackedStack<T>::getCurrentState() {
+std::vector<T> TrackedStack<T>::getCurrentState() const {
     std::vector<T> res;
     std::stack<T> tmp = stack;
     while (!tmp.empty()) {
@@ -135,10 +136,7 @@ std::vector<T> TrackedStack<T>::getCurrentState() {
 
 template<typename T>
 void TrackedStack<T>::clear() {
-    int s = size();
-    for (int i = 0; i < s; i++) {
-        stack.pop();
-    }
+    while (!stack.empty()) stack.pop();
 }
 
-#endif
+// #endif

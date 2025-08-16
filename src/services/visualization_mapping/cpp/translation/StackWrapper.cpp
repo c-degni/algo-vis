@@ -24,6 +24,7 @@ class TypeName##StackWrapper : public Napi::ObjectWrap<TypeName##StackWrapper> {
         }                                                                                                               \
                                                                                                                         \
         TypeName##StackWrapper(const Napi::CallbackInfo &info) : Napi::ObjectWrap<TypeName##StackWrapper>(info) {}      \
+        ~TypeName##StackWrapper() noexcept override = default;                                                          \
                                                                                                                         \
         Napi::Value Push(const Napi::CallbackInfo &info) {                                                              \
             Napi::Env env = info.Env();                                                                                 \
@@ -38,28 +39,26 @@ class TypeName##StackWrapper : public Napi::ObjectWrap<TypeName##StackWrapper> {
                                                                                                                         \
         Napi::Value Pop(const Napi::CallbackInfo &info) {                                                               \
             Napi::Env env = info.Env();                                                                                 \
-            try {                                                                                                       \
-                CppType val = stack.pop();                                                                              \
-                return JsCreate(env, val);                                                                              \
-            } catch (const std::exception &e) {                                                                         \
-                Napi::Error::New(env, e.what()).ThrowAsJavaScriptException();                                           \
+            auto val = stack.pop();                                                                                     \
+            if (!val.has_value()) {                                                                                     \
+                Napi::Error::New(env, "Stack is empty").ThrowAsJavaScriptException();                                   \
                 return env.Null();                                                                                      \
             }                                                                                                           \
+            return JsCreate(env, *val);                                                                                 \
         }                                                                                                               \
                                                                                                                         \
         Napi::Value Top(const Napi::CallbackInfo &info) {                                                               \
             Napi::Env env = info.Env();                                                                                 \
-            try {                                                                                                       \
-                CppType val = stack.top();                                                                              \
-                return JsCreate(env, val);                                                                              \    
-            } catch (const std::exception &e) {                                                                         \
-                Napi::Error::New(env, e.what()).ThrowAsJavaScriptException();                                           \
+            auto val = stack.top();                                                                                     \
+            if (!val.has_value()) {                                                                                     \
+                Napi::Error::New(env, "Stack is empty").ThrowAsJavaScriptException();                                   \
                 return env.Null();                                                                                      \
             }                                                                                                           \
+            return JsCreate(env, *val);                                                                                 \
         }                                                                                                               \
                                                                                                                         \
         Napi::Value Size(const Napi::CallbackInfo &info) {                                                              \
-            Napi::Env env = info.Env();                                                                                 \   
+            Napi::Env env = info.Env();                                                                                 \
             return Napi::Number::New(env, stack.size());                                                                \
         }                                                                                                               \
                                                                                                                         \
@@ -79,7 +78,7 @@ class TypeName##StackWrapper : public Napi::ObjectWrap<TypeName##StackWrapper> {
             std::string json = stack.getExecutionTrace();                                                               \
             return Napi::String::New(env, json);                                                                        \
         }                                                                                                               \
-};                                        
+};                                                                                                         
 
 // Add string stack wrapper def (could be macro to fit in with rest idk yet)
 
