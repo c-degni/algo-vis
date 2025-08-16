@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Plus, Trash2, Play, RotateCcw, Edit3 } from 'lucide-react';
 
 const UID_NUMBER_LEN: number = 9;
@@ -46,6 +46,23 @@ const PRESET_SEQUENCES = {
     // Queue next
 };
 
+const valueIsCorrectType = (val: any, type: string): boolean => {
+    switch (type) {
+        case 'int':
+            return Number.isInteger(val) && !Number.isNaN(val);
+        case 'double':
+        case 'float':
+            // Any finite number (int or dec)
+            return typeof val === 'number' && !Number.isNaN(val);
+        case 'bool':
+            return typeof val === 'boolean';
+        // case 'string': coming soon not yet tho
+        //     return typeof val === 'string';
+        default:
+            return false;
+    }
+}
+
 export default function StepBuilder({
     dataStructureType,
     dataType,
@@ -66,21 +83,32 @@ export default function StepBuilder({
     // 2 in the substring is for the beginning "0."
     const generateId = (): string => `op_${Date.now()}_${Math.random().toString(36).substring(2, 2 + UID_NUMBER_LEN)}`;
 
-    const parseValue = useCallback((valueStr: string, type: string) => {
-        if (!valueStr.trim()) return undefined;
+    const parseValue = useCallback((valStr: string, type: string) => {
+        if (!valStr.trim()) return undefined;
         switch (type) {
             case 'int':
-                return parseInt(valueStr);
+                return parseInt(valStr); // Hurts but necessary
             case 'double':
             case 'float':
-                return parseFloat(valueStr);
+                return parseFloat(valStr);
             case 'bool':
-                return valueStr.toLowerCase() === 'true';
+                const lower: string = valStr.toLowerCase().trim();
+                return lower === 'true' || lower === 'false' ? lower === 'true' : undefined;;
             case 'string':
             default:
-                return valueStr;
+                return valStr;
         }
     }, []);
+
+    useEffect(() => {
+        setOperations(prev => prev.filter(op => {
+            if (op.value === undefined || op.value === null) return true;
+            if (!op.value) return true; // Keep ops without vals like pop and clear
+            
+            const parsedVal = parseValue(op.value.toString(), dataType);
+            return valueIsCorrectType(parsedVal, dataType);
+        }));
+    }, [dataType, parseValue, valueIsCorrectType]);
 
     const addOperation = useCallback(() => {
         if (!newOperation.type) return;
@@ -89,13 +117,20 @@ export default function StepBuilder({
         if (!operationDef) return;
     
         const operation: Operation = {
-          id: generateId(),
-          type: newOperation.type,
-          description: operationDef.description
+            id: generateId(),
+            type: newOperation.type,
+            description: operationDef.description
         };
     
         if (operationDef.needsValue && newOperation.value) {
-          operation.value = parseValue(newOperation.value, dataType);
+            const parsedVal = parseValue(newOperation.value, dataType);
+            if (!valueIsCorrectType(parsedVal, dataType) || dataType === 'int' && newOperation.value.includes('.')) {
+                alert(
+                    `Invalid ${dataType} value: ${newOperation.value}. Please enter a ${dataType} or change the ${dataStructureType} data type.`
+                );
+                return;
+            }
+            operation.value = parsedVal;
         }
     
         setOperations(prev => [...prev, operation]);
@@ -124,13 +159,13 @@ export default function StepBuilder({
         if (!operationDef) return;
     
         const updatedOperation: Operation = {
-          id: editingId,
-          type: newOperation.type,
-          description: operationDef.description
+            id: editingId,
+            type: newOperation.type,
+            description: operationDef.description
         };
     
         if (operationDef.needsValue && newOperation.value) {
-          updatedOperation.value = parseValue(newOperation.value, dataType);
+            updatedOperation.value = parseValue(newOperation.value, dataType);
         }
     
         setOperations(prev => prev.map(op => op.id === editingId ? updatedOperation : op));
@@ -146,8 +181,8 @@ export default function StepBuilder({
     
     const loadPreset = useCallback((preset: any) => {
         const presetOpsWithIds = preset.operations.map((op: any) => ({
-          ...op,
-          id: generateId()
+            ...op,
+            id: generateId()
         }));
         setOperations(presetOpsWithIds);
     }, []);

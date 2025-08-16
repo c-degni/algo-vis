@@ -4,7 +4,7 @@ class StackController {
     static async executeOperations(req, res) {
         try {
             console.log("✅ Received request:", req.body);
-            const { operations, dataType = "int" } = req.body;
+            const { operations, dataType } = req.body;
     
             let stack;
             switch (dataType.toLowerCase()) {
@@ -25,7 +25,6 @@ class StackController {
             }
     
             operations.forEach((op, index) => {
-                // console.log(`Processing operation ${index}:`, op);
                 console.log(`Operation ${index}:`, {
                     type: op.type,
                     value: op.value,
@@ -33,6 +32,7 @@ class StackController {
                     isNumber: typeof op.value === 'number',
                     isInteger: Number.isInteger(op.value)
                 });
+                
                 switch (op.type) {
                     case 'push': 
                         stack.push(op.value); 
