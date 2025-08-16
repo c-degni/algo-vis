@@ -68,13 +68,6 @@ export default function StackPage() {
 
     return (
         <div className="space-y-6">
-            {/* <div className="bg-white rounded-lg shadow-lg p-6">
-                <h1 className="text-3xl font-bold text-gray-800 mb-4">Stack Visualizer</h1>
-                <p className="text-gray-600">
-                    Build a sequence of stack operations and watch them execute step by step.
-                </p>
-            </div> */}
-
             {/* Data Type Selector */}
             <div className="bg-white rounded-lg shadow-lg p-6">
                 <h1 className="text-3xl font-bold text-gray-800 mb-4">Stack Visualizer</h1>
