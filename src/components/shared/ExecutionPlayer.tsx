@@ -92,7 +92,6 @@ export default function ExecutionPlayer({
   }, []);
 
   const currentTrace = trace[currentStep];
-  const progress = trace.length > 0 ? (currentStep / (trace.length - 1)) * 100 : 0;
 
   if (isLoading) {
     return (

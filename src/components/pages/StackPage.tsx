@@ -41,11 +41,16 @@ export default function StackPage() {
                 }),
             });
 
+            const data = await response.json();
+
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);  
+                if (data.errorType === 'STACK_UNDERFLOW') {
+                    throw new Error('Stack Underflow: Cannot pop from or peek at empty stack!');
+                } else {
+                    throw new Error(`HTTP error! Status: ${response.status}`);  
+                }
             }
 
-            const data = await response.json();
             setTrace(data.trace || []);
             
             // Init state
@@ -55,7 +60,11 @@ export default function StackPage() {
             }
         } catch (error) {
             console.error('Failed to execute operations:', error);
-            alert('Failed to execute operations. Make sure the backend is running.');
+            if (error.message.includes('Stack Underflow')) {  
+                alert(`${error.message}`);
+            } else {
+                alert(`Failed to execute operations. Make sure the backend is running.\n${error.message}`);
+            }
         } finally {
             setIsExecuting(false);
         }
@@ -100,6 +109,7 @@ export default function StackPage() {
                 key={dataType}
                 dataStructureType="stack"
                 dataType={dataType}
+                onDataTypeChange={setDataType}
                 onExecute={handleExecuteOperations}
                 isExecuting={isExecuting}
             />

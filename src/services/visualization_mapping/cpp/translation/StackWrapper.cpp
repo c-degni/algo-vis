@@ -15,6 +15,7 @@ class TypeName##StackWrapper : public Napi::ObjectWrap<TypeName##StackWrapper> {
                 InstanceMethod("pop", &TypeName##StackWrapper::Pop),                                                    \
                 InstanceMethod("top", &TypeName##StackWrapper::Top),                                                    \
                 InstanceMethod("empty", &TypeName##StackWrapper::Empty),                                                \
+                InstanceMethod("isEmpty", &TypeName##StackWrapper::IsEmpty),                                            \
                 InstanceMethod("size", &TypeName##StackWrapper::Size),                                                  \
                 InstanceMethod("clear", &TypeName##StackWrapper::Clear),                                                \
                 InstanceMethod("getTrace", &TypeName##StackWrapper::GetTrace)                                           \
@@ -64,7 +65,12 @@ class TypeName##StackWrapper : public Napi::ObjectWrap<TypeName##StackWrapper> {
                                                                                                                         \
         Napi::Value Empty(const Napi::CallbackInfo& info) {                                                             \
             Napi::Env env = info.Env();                                                                                 \
-            return Napi::Boolean::New(env, stack.isEmpty());                                                            \
+            return Napi::Boolean::New(env, stack.isEmpty(false));                                                       \
+        }                                                                                                               \
+                                                                                                                        \
+        Napi::Value IsEmpty(const Napi::CallbackInfo& info) {                                                           \
+            Napi::Env env = info.Env();                                                                                 \
+            return Napi::Boolean::New(env, stack.isEmpty(true));                                                        \
         }                                                                                                               \
                                                                                                                         \
         Napi::Value Clear(const Napi::CallbackInfo& info) {                                                             \
@@ -96,5 +102,3 @@ Napi::Object StackModule_Init(Napi::Env env, Napi::Object exports) {
     // Add string stack wrapper init
     return exports;
 }
-
-// NODE_API_MODULE(cpp_stack, StackModule_Init)
