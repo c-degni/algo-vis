@@ -111,7 +111,7 @@ The architecture supports easy addition of new data structures:
 1. Create controller in `api/controllers/`
 1. Add React visualizer in `components/visualizers/`
 
-If you add a new data structure/algorithm, please consider adding a preset of operations for said data structure/algorithm so that users can have a base visualization to start with. THAT WOULD BE HEAVILY APPRECIATED :pray:! 
+If you add a new DSA, please consider adding a preset of operations for said DSA so that users can have a base visualization to start with. THAT WOULD BE HEAVILY APPRECIATED :pray:! 
 
 Currently no algorithms have been implemented but they follow a similar structure to that of data structures. Certain routes will have to be added etc. but many things may already be done and commented out :wink:.
 
