@@ -14,7 +14,7 @@ This project combines C++ DSA implementations with a React frontend to provide e
 
 ## Project Structure
 __:electric_plug: API Layer__
-- `controllers/{DSA}.js` - Business logic & validation
+- `controllers/{DSA}Controller.js` - Business logic & validation
 - `routes/{data-structures or algorithms}.js` - HTTP endpoints & routing
 
 __:zap: C++ Core__
