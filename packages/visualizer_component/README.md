@@ -19,7 +19,7 @@ npm install @c-degni/algo-vis
 ## Quick Start
 ### Basic Usage
 ```tsx
-// Using stacks as the data structure
+// Stack example
 import { VisualizationContainer } from '@c-degni/algo-vis';
 
 function MyApp() {
