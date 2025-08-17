@@ -51,7 +51,6 @@ export default function StackPage() {
                 }
             }
 
-            // const data = await response.json();
             setTrace(data.trace || []);
             
             // Init state
