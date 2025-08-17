@@ -15,6 +15,7 @@ interface StepBuilderProps {
     dataType: 'int' | 'double' | 'float' | 'bool';
     onExecute: (operations: Operation[]) => void;
     isExecuting?: boolean;
+    onDataTypeChange?: (dataType: 'int' | 'double' | 'float' | 'bool') => void;
 }
 
 const DATA_STRUCTURE_OPERATIONS = {
@@ -67,7 +68,8 @@ export default function StepBuilder({
     dataStructureType,
     dataType,
     onExecute,
-    isExecuting = false
+    isExecuting = false,
+    onDataTypeChange
 }: StepBuilderProps) {
     const [operations, setOperations] = useState<Operation[]>([]);
     const [newOperation, setNewOperation] = useState({
@@ -179,12 +181,14 @@ export default function StepBuilder({
     }, []);
     
     const loadPreset = useCallback((preset: any) => {
+        onDataTypeChange?.('int'); // All presets will be of int type by default (for now at least)
+
         const presetOpsWithIds = preset.operations.map((op: any) => ({
             ...op,
             id: generateId()
         }));
         setOperations(presetOpsWithIds);
-    }, []);
+    }, [onDataTypeChange]);
     
     const executeSequence = useCallback(() => {
         if (operations.length === 0) return;

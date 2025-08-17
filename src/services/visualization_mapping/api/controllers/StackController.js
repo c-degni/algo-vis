@@ -32,15 +32,17 @@ class StackController {
                     isNumber: typeof op.value === 'number',
                     isInteger: Number.isInteger(op.value)
                 });
-                
+
                 switch (op.type) {
                     case 'push': 
                         stack.push(op.value); 
                         break;
                     case 'pop': 
+                        if (stack.empty()) throw new Error('Stack underflow');
                         stack.pop(); 
                         break;
                     case 'top': 
+                        if (stack.empty()) throw new Error('Stack underflow');
                         stack.top(); 
                         break;
                     case 'size': 
@@ -66,11 +68,19 @@ class StackController {
             });
             
         } catch (error) {
-            console.error("❌ StackController error:", error);
-            res.status(500).json({ 
-                error: error.message,
-                stack: error.stack 
-            });
+            console.error("❌ StackController error:", error.message);
+
+            if (error.message.includes('underflow')) {
+                res.status(400).json({ 
+                    error: error.message,
+                    errorType: 'STACK_UNDERFLOW',
+                });
+            } else {
+                res.status(500).json({ 
+                    error: error.message,
+                    errorType: 'GENERAL_ERROR',
+                });
+            }
         }
     }
 }

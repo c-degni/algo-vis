@@ -1,5 +1,3 @@
-// #ifndef TRACKED_STACK_H
-// #define TRACKED_STACK_H
 #pragma once
 #include <stack>
 #include <vector>
@@ -28,7 +26,7 @@ class TrackedStack {
         void push(const T& val);
         std::optional<T> pop();
         std::optional<T> top();
-        bool isEmpty() const;
+        bool isEmpty(bool track) const;
         int size() const;
         std::string getExecutionTrace() const;
         std::vector<T> getCurrentState() const;
@@ -99,12 +97,14 @@ std::optional<T> TrackedStack<T>::top() {
 }
 
 template<typename T>
-bool TrackedStack<T>::isEmpty() const {
+bool TrackedStack<T>::isEmpty(bool track) const {
     bool empty = stack.empty();
-    recordOp(
-        "check_empty", 
-        "Checked if empty: " + std::string(empty ? "true" : "false")
-    );
+    if (track) {
+        recordOp(
+            "empty", 
+            "Checked if empty: " + std::string(empty ? "true" : "false")
+        );
+    }
     return empty;
 }
 
@@ -112,7 +112,7 @@ template<typename T>
 int TrackedStack<T>::size() const {
     int s = stack.size();
     recordOp(
-        "Size:", 
+        "size", 
         std::to_string(s)
     );
     return s;
@@ -138,5 +138,3 @@ template<typename T>
 void TrackedStack<T>::clear() {
     while (!stack.empty()) stack.pop();
 }
-
-// #endif
