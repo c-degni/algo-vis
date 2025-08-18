@@ -68,7 +68,7 @@ This starts:
 
 ## API Endpoints
 - `GET /api/health` - Health check
-- `POST /api/{data-structures or algorithms}/{dsa}/execute` - Execute stack operations
+- `POST /api/{data-structures or algorithms}/{dsa}/execute` - Execute DSA operations
 
 ### Request format: 
 ```json
@@ -76,8 +76,8 @@ This starts:
 {
     "dataType": "int",
     "operations": [
-        {"type": "push", "value": 10},
-        {"type": "pop"}
+        { "type": "push", "value": 10 },
+        { "type": "pop" }
     ]
 }
 ```
