@@ -1,4 +1,4 @@
-# Data Structure Visualizer Component
+# Algo-Vis Component Package
 A portable React component package for integrating interactive data structure and algorithm visualizations into any web application.
 
 ## Overview
