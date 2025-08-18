@@ -20,6 +20,9 @@ class StackController {
                 case "bool":
                     stack = new ds.BoolStack();
                     break; 
+                case "string":
+                    stack = new ds.StringStack();
+                    break; 
                 default:
                     return res.status(400).json({ error: 'Unsupported data type' });
             }

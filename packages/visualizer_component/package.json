@@ -1,13 +1,16 @@
 {
     "name": "@c-degni/algo-vis",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "main": "dist/index.js",
-    "files": ["dist/", "README.md"],
+    "files": [
+        "dist/",
+        "README.md"
+    ],
     "scripts": {
-      "build": "tsc",
-      "prepublishOnly": "npm run build"
+        "build": "tsc",
+        "prepublishOnly": "npm run build"
     },
     "devDependencies": {
-      "typescript": "^5.9.2"
+        "typescript": "^5.9.2"
     }
 }

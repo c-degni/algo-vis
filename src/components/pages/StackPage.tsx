@@ -16,7 +16,7 @@ export default function StackPage() {
     const [currentState, setCurrentState] = useState<any>(null);
     const [currentHighlights, setCurrentHighlights] = useState<number[]>([]);
     const [isExecuting, setIsExecuting] = useState(false);
-    const [dataType, setDataType] = useState<'int' | 'double' | 'float' | 'bool'>('int');
+    const [dataType, setDataType] = useState<'int' | 'double' | 'float' | 'bool' | 'string'>('int');
 
     useEffect(() => {
         setTrace([]);
@@ -97,6 +97,7 @@ export default function StackPage() {
                         <option value="double">Double</option>
                         <option value="float">Float</option>
                         <option value="bool">Boolean</option>
+                        <option value="string">String</option>
                     </select>
                 </div>
                 <p className="text-gray-600">

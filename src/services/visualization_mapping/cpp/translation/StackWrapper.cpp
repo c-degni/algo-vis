@@ -1,4 +1,5 @@
 #include  <napi.h>
+#include <string>
 #include "TrackedStack.h"
 
 // "start clock rising edge on parity sequence 101" - cuz
@@ -86,19 +87,17 @@ class TypeName##StackWrapper : public Napi::ObjectWrap<TypeName##StackWrapper> {
         }                                                                                                               \
 };                                                                                                         
 
-// Add string stack wrapper def (could be macro to fit in with rest idk yet)
-
 TYPED_STACK_WRAPPER(Int, int, IsNumber, As<Napi::Number>().Int32Value, Napi::Number::New)
 TYPED_STACK_WRAPPER(Double, double, IsNumber, As<Napi::Number>().DoubleValue, Napi::Number::New)
 TYPED_STACK_WRAPPER(Float, float, IsNumber, As<Napi::Number>().FloatValue, Napi::Number::New)
 TYPED_STACK_WRAPPER(Bool, bool, IsBoolean, As<Napi::Boolean>().Value, Napi::Boolean::New)
-// Add string stack wrapper instantiation
+TYPED_STACK_WRAPPER(String, std::string, IsString, As<Napi::String>().Utf8Value, Napi::String::New)
 
 Napi::Object StackModule_Init(Napi::Env env, Napi::Object exports) {
     IntStackWrapper::Init(env, exports);
     DoubleStackWrapper::Init(env, exports);
     FloatStackWrapper::Init(env, exports);
     BoolStackWrapper::Init(env, exports);
-    // Add string stack wrapper init
+    StringStackWrapper::Init(env, exports);
     return exports;
 }

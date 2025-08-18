@@ -12,10 +12,10 @@ interface Operation {
 
 interface StepBuilderProps {
     dataStructureType: 'stack';
-    dataType: 'int' | 'double' | 'float' | 'bool';
+    dataType: 'int' | 'double' | 'float' | 'bool' | 'string';
     onExecute: (operations: Operation[]) => void;
     isExecuting?: boolean;
-    onDataTypeChange?: (dataType: 'int' | 'double' | 'float' | 'bool') => void;
+    onDataTypeChange?: (dataType: 'int' | 'double' | 'float' | 'bool' | 'string') => void;
 }
 
 const DATA_STRUCTURE_OPERATIONS = {
@@ -57,8 +57,8 @@ const valueIsCorrectType = (val: any, type: string): boolean => {
             return typeof val === 'number' && !Number.isNaN(val);
         case 'bool':
             return typeof val === 'boolean';
-        // case 'string': coming soon not yet tho
-        //     return typeof val === 'string';
+        case 'string':
+            return typeof val === 'string';
         default:
             return false;
     }
