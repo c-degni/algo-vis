@@ -10,7 +10,7 @@ interface Operation {
 interface VisualizationContainerProps {
     apiEndpoint: string;
     dataStructure: 'stack';
-    dataType: 'int' | 'double' | 'float' | 'bool';
+    dataType: 'int' | 'double' | 'float' | 'bool' | 'string';
     operations: Operation[];
     onError?: (error: string) => void;
 }
@@ -82,7 +82,7 @@ export default function VisualizationContainer({
                     <ExecutionPlayer
                         trace={trace}
                         onStepChange={handleStepChange}
-                        title={`${dataStructure} operations`}
+                        title={`${dataStructure} Operations`}
                         dataStructureType={dataStructure}
                     />
                     {renderVisualizer()}

@@ -2,8 +2,9 @@
 #include <stack>
 #include <vector>
 #include <memory>
-#include "ExecutionTracer.h"
 #include <optional>
+#include <string>
+#include "ExecutionTracer.h"
 
 
 template<typename T>
@@ -54,12 +55,22 @@ void TrackedStack<T>::recordOp(
     tracer->recordStep(step);
 }
 
+// In case val is already a string, compiler will choose proper overload
+std::string stringify(const std::string& val) {
+    return val;
+}
+
+template<typename T>
+std::string stringify(const T& val) {
+    return std::to_string(val);
+}
+
 template<typename T>
 void TrackedStack<T>::push(const T& val) {
     stack.push(val);
     recordOp(
         "push", 
-        "Pushed " + std::to_string(val), 
+        "Pushed " + stringify(val), 
         {static_cast<int>(stack.size() - 1)}
     );
 }
@@ -78,7 +89,7 @@ std::optional<T> TrackedStack<T>::pop() {
     stack.pop();
     recordOp(
         "pop", 
-        "Popped " + std::to_string(val), 
+        "Popped " + stringify(val), 
         {static_cast<int>(stack.size())}
     );
     return val;
@@ -91,7 +102,7 @@ std::optional<T> TrackedStack<T>::top() {
     T val = stack.top();
     recordOp(
         "peek", 
-        "Peeked at top: " + std::to_string(val)
+        "Peeked at top: " + stringify(val)
     );
     return val;
 }
