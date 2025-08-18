@@ -68,8 +68,8 @@ function CustomVisualization() {
 
 ## API Requirements
 Your backend must return execution traces in this format:
+### Stack Example
 ```json
-// Stack example
 {
     "trace": [
         {
@@ -97,9 +97,9 @@ Your backend must return execution traces in this format:
 ```
 
 ### Request Format
+#### Stack Example
+POST /api/data-structures/stack/execute
 ```json
-// Stack example
-// POST /api/data-structures/stack/execute
 {
     "dataType": "int",
     "operations": [

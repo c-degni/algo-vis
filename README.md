@@ -71,8 +71,8 @@ This starts:
 - `POST /api/{data-structures or algorithms}/{dsa}/execute` - Execute DSA operations
 
 ### Request format: 
+#### Stack Example
 ```json
-// Stack example
 {
     "dataType": "int",
     "operations": [
