@@ -17,10 +17,16 @@ export default function QueueVisualizer({ elements = [], highlights = [] } : Que
 
         const elementWidth = 80;
         const elementHeight = 60;
-        const width = Math.max(400, elements.length * elementWidth + 200);
+        const padding = 100;
+        const width = Math.max(400, elements.length * elementWidth + 2 * padding);
         const height = 200;
 
         svg.attr('width', width).attr('height', height);
+
+        if (elements.length === 0) return;
+
+        const startX = padding;
+        const centerY = height / 2;
 
         // Draw queue elements
         const queueGroups = svg.selectAll('.queue-element')
@@ -29,14 +35,14 @@ export default function QueueVisualizer({ elements = [], highlights = [] } : Que
             .append('g')
             .attr('class', 'queue-element')
             .attr('transform', (d, i) => 
-                `translate(${100 + i * elementWidth}, ${(height - elementHeight) / 2})`
+                `translate(${startX + i * elementWidth}, ${centerY - elementHeight / 2})`
             );
 
         // Draw rectangles
         queueGroups.append('rect')
             .attr('width', elementWidth - 5)
             .attr('height', elementHeight)
-            .attr('fill', (d, i) => highlights.includes(i) ? '#3B82F6' : '#E5E7EB')
+            .attr('fill', (d, i) => highlights.includes(i) ? '#3B82F6' : '#F3F4F6')
             .attr('stroke', '#374151')
             .attr('stroke-width', 2)
             .attr('rx', 5);
@@ -52,51 +58,45 @@ export default function QueueVisualizer({ elements = [], highlights = [] } : Que
             .attr('font-weight', 'bold')
             .text(d => d);
 
-        // Add "FRONT" label
-        if (elements.length > 0) {
-            svg.append('text')
-                .attr('x', 100 + (elementWidth - 5) / 2)
-                .attr('y', (height - elementHeight) / 2 - 15)
-                .attr('text-anchor', 'middle')
-                .attr('dominant-baseline', 'middle')
-                .attr('fill', '#DC2626')
-                .attr('font-size', '12')
-                .attr('font-weight', 'bold')
-                .text('FRONT');
+        // FRONT label and arrow
+        const frontX = startX + (elementWidth - 5) / 2;
+        svg.append('text')
+            .attr('x', frontX)
+            .attr('y', centerY - elementHeight / 2 - 25)
+            .attr('text-anchor', 'middle')
+            .attr('fill', '#DC2626')
+            .attr('font-size', '14')
+            .attr('font-weight', 'bold')
+            .text('FRONT');
 
-            // Add arrow pointing to front
-            svg.append('path')
-                .attr('d', `M ${100 + (elementWidth - 5) / 2} ${(height - elementHeight) / 2 - 5} 
-                    L ${100 + (elementWidth - 5) / 2 - 5} ${(height - elementHeight) / 2 - 10} 
-                    M ${100 + (elementWidth - 5) / 2} ${(height - elementHeight) / 2 - 5} 
-                    L ${100 + (elementWidth - 5) / 2 + 5} ${(height - elementHeight) / 2 - 10}`)
-                .attr('stroke', '#DC2626')
-                .attr('stroke-width', 2)
-                .attr('fill', 'none');
-        }
+        svg.append('path')
+            .attr('d', `M ${frontX} ${centerY - elementHeight / 2 - 10} 
+                L ${frontX - 5} ${centerY - elementHeight / 2 - 15} 
+                M ${frontX} ${centerY - elementHeight / 2 - 10} 
+                L ${frontX + 5} ${centerY - elementHeight / 2 - 15}`)
+            .attr('stroke', '#DC2626')
+            .attr('stroke-width', 2)
+            .attr('fill', 'none');
 
-        // Add "BACK" label
-        if (elements.length > 0) {
-            svg.append('text')
-                .attr('x', 100 + (elements.length - 1) * elementWidth + (elementWidth - 5) / 2)
-                .attr('y', (height + elementHeight) / 2 + 25)
-                .attr('text-anchor', 'middle')
-                .attr('dominant-baseline', 'middle')
-                .attr('fill', '#059669')
-                .attr('font-size', '12')
-                .attr('font-weight', 'bold')
-                .text('BACK');
+        // BACK label and arrow
+        const backX = startX + (elements.length - 1) * elementWidth + (elementWidth - 5) / 2;
+        svg.append('text')
+            .attr('x', backX)
+            .attr('y', centerY + elementHeight / 2 + 35)
+            .attr('text-anchor', 'middle')
+            .attr('fill', '#059669')
+            .attr('font-size', '14')
+            .attr('font-weight', 'bold')
+            .text('BACK');
 
-            // Add arrow pointing to back
-            svg.append('path')
-                .attr('d', `M ${100 + (elements.length - 1) * elementWidth + (elementWidth - 5) / 2} ${(height + elementHeight) / 2 + 15} 
-                        L ${100 + (elements.length - 1) * elementWidth + (elementWidth - 5) / 2 - 5} ${(height + elementHeight) / 2 + 20} 
-                        M ${100 + (elements.length - 1) * elementWidth + (elementWidth - 5) / 2} ${(height + elementHeight) / 2 + 15} 
-                        L ${100 + (elements.length - 1) * elementWidth + (elementWidth - 5) / 2 + 5} ${(height + elementHeight) / 2 + 20}`)
-                .attr('stroke', '#059669')
-                .attr('stroke-width', 2)
-                .attr('fill', 'none');
-        }
+        svg.append('path')
+            .attr('d', `M ${backX} ${centerY + elementHeight / 2 + 10} 
+                L ${backX - 5} ${centerY + elementHeight / 2 + 15} 
+                M ${backX} ${centerY + elementHeight / 2 + 10} 
+                L ${backX + 5} ${centerY + elementHeight / 2 + 15}`)
+            .attr('stroke', '#059669')
+            .attr('stroke-width', 2)
+            .attr('fill', 'none');
 
     }, [elements, highlights]);
 
@@ -111,12 +111,6 @@ export default function QueueVisualizer({ elements = [], highlights = [] } : Que
                     <p>Queue is empty</p>
                 </div>
             )}
-            {/* {elements.length > 0 && (
-                <div className="mt-4 text-sm text-gray-600 text-center">
-                    <p><span className="text-red-600 font-semibold">FRONT</span> - Elements are removed from here (dequeue)</p>
-                    <p><span className="text-green-600 font-semibold">REAR</span> - Elements are added here (enqueue)</p>
-                </div>
-            )} */}
         </div>
     );
 }
