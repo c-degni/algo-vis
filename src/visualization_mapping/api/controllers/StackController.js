@@ -1,4 +1,4 @@
-const ds = require("../../../../../build/Release/data_structures");
+const ds = require("../../../../build/Release/data_structures");
 
 class StackController {
     static async executeOperations(req, res) {
@@ -59,7 +59,6 @@ class StackController {
                         break;
                 }
             });
-
             
             const trace = JSON.parse(stack.getTrace());
             console.log("✅ Generated trace with", trace.length, "steps");

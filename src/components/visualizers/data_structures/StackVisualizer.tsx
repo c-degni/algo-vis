@@ -6,7 +6,7 @@ interface StackVisualizerProps {
   highlights?: number[];
 }
 
-export default function StackVisualizer({ elements = [], highlights = [] }: StackVisualizerProps) {
+export default function StackVisualizer({ elements = [], highlights = [] } : StackVisualizerProps) {
   const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {

@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import ExecutionPlayer from '../../../src/components/shared/ExecutionPlayer';
 import StackVisualizer from '../../../src/components/visualizers/data_structures/StackVisualizer';
+import QueueVisualizer from '../../../src/components/visualizers/data_structures/QueueVisualizer';
 
 interface Operation {
     type: string;
@@ -9,7 +10,7 @@ interface Operation {
 
 interface VisualizationContainerProps {
     apiEndpoint: string;
-    dataStructure: 'stack';
+    dataStructure: 'stack' | 'queue';
     dataType: 'int' | 'double' | 'float' | 'bool' | 'string';
     operations: Operation[];
     onError?: (error: string) => void;
@@ -62,6 +63,13 @@ export default function VisualizationContainer({
             case 'stack':
                 return (
                     <StackVisualizer
+                        elements={currentState?.elements || []}
+                        highlights={currentHighlights}
+                    />
+                );
+            case 'queue':
+                return (
+                    <QueueVisualizer
                         elements={currentState?.elements || []}
                         highlights={currentHighlights}
                     />

@@ -11,7 +11,7 @@ interface Operation {
 }
 
 interface StepBuilderProps {
-    dataStructureType: 'stack';
+    dataStructureType: 'stack' | 'queue';
     dataType: 'int' | 'double' | 'float' | 'bool' | 'string';
     onExecute: (operations: Operation[]) => void;
     isExecuting?: boolean;
@@ -27,24 +27,43 @@ const DATA_STRUCTURE_OPERATIONS = {
         { type: 'empty', needsValue: false, description: 'Check if empty' },
         { type: 'clear', needsValue: false, description: 'Remove all elements' }
     ],
-    // Queue next
+    queue: [
+        { type: 'enqueue', needsValue: true, description: 'Add element to back' },
+        { type: 'dequeue', needsValue: false, description: 'Remove front element' },
+        { type: 'front', needsValue: false, description: 'View front element' },
+        { type: 'size', needsValue: false, description: 'Get size' },
+        { type: 'empty', needsValue: false, description: 'Check if empty' },
+        { type: 'clear', needsValue: false, description: 'Remove all elements' }
+    ]
 };
 
 const PRESET_SEQUENCES = {
     stack: [
-      {
-        name: 'LIFO Demo',
-        operations: [
-          { type: 'push', value: 10 },
-          { type: 'push', value: 20 },
-          { type: 'push', value: 30 },
-          { type: 'top' },
-          { type: 'pop' },
-          { type: 'pop' }
-        ]
-      }
+        {
+            name: 'LIFO Demo',
+            operations: [
+                { type: 'push', value: 10 },
+                { type: 'push', value: 20 },
+                { type: 'push', value: 30 },
+                { type: 'top' },
+                { type: 'pop' },
+                { type: 'pop' }
+            ]
+        }
     ],
-    // Queue next
+    queue: [
+        {
+            name: 'FIFO Demo',
+            operations: [
+                { type: 'enqueue', value: 10 },
+                { type: 'enqueue', value: 20 },
+                { type: 'enqueue', value: 30 },
+                { type: 'front' },
+                { type: 'dequeue' },
+                { type: 'dequeue' }
+            ]
+        }
+    ]
 };
 
 const valueIsCorrectType = (val: any, type: string): boolean => {

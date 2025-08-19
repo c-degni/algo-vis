@@ -10,7 +10,7 @@ This package provides plug-and-play visualization components that accept operati
 ### Key Components:
 - __VisualizationContainer:__ Main wrapper component that handles API calls
 - __ExecutionPlayer:__ Universal playback controls (play, pause, step, seek)
-- __DSA Visualizers:__ D3.js animated components for stack, queue, trees, etc.
+- __DSA Visualizers:__ D3.js animated components for stacks, queues, trees, etc.
 
 ## Installation
 ```bash
