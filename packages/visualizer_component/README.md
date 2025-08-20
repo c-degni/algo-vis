@@ -156,4 +156,4 @@ Updates will be synced to this package in releases.
 ## License
 MIT - See LICENSE for details
 
-Thanks for using the Data Structure Visualizer Component :raised_hands:!
+Thanks for using the Algo-Vis Component Package :raised_hands:!
