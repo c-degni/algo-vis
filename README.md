@@ -2,7 +2,7 @@
 Algo-Vis is an interactive web application for visualizing data structure and algorithm operations with step-by-step execution traces and smooth animations. DSA means data structure/algorithm in the scope of this project.
 
 ## Overview
-This project combines C++ DSA implementations with a React frontend to provide educational visualizations of DSA operations. Users can build custom operation sequences and watch them execute with full playback controls.
+This project combines C++ DSA implementations with a React frontend to provide educational visualizations of DSA operations. Users can build custom operation sequences and watch them execute with full playback controls. Also, make sure to check out the portable [Algo-Vis Component Package](/packages/visualizer_component/README.md)!
 
 ## Architecture
 `Frontend (React + D3.js) → API (Express) → C++ DSA Implementation → Execution Traces → Visualization`
