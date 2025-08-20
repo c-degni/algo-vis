@@ -1,7 +1,9 @@
 {
     "name": "@c-degni/algo-vis",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "main": "dist/index.js",
+    "author": "Christ Degni",
+    "license": "MIT",
     "files": [
         "dist/",
         "README.md"
