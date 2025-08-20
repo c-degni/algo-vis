@@ -1,11 +1,11 @@
 #include <napi.h>
 
 Napi::Object StackModule_Init(Napi::Env env, Napi::Object exports);
-// Queue next
+Napi::Object QueueModule_Init(Napi::Env env, Napi::Object exports);
 
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
     StackModule_Init(env, exports);
-    // Queue next
+    QueueModule_Init(env, exports);
     return exports;
 }
 

@@ -13,9 +13,9 @@ router.get('/catalog', (req, res) => {
         status: 'success',
         data: {
             dataStructures: {
-                available: ['stack'], // Adding 'queue' next
+                available: ['stack', 'queue'],
                 categories: {
-                    linear: ['stack'], // Adding 'queue', 'linkedlist' 
+                    linear: ['stack', 'queue'], // Adding 'linkedlist' 
                     trees: [], // Will have 'binarytree', 'bst', 'avl', 'heap'
                     graphs: [], // Will have 'graph', 'adjacencymatrix'
                     hash: [] // Will have 'hashtable'
@@ -29,7 +29,7 @@ router.get('/catalog', (req, res) => {
             //         graph: [] // Will have 'dijkstra', 'bfs', 'dfs'
             //     }
             // },
-            version: '1.0.0'
+            version: '1.1.1'
         }
     });
 });
@@ -50,8 +50,8 @@ router.get('/health', (req, res) => {
 // API info
 router.get('/', (req, res) => {
     res.json({
-        message: 'Data Structure & Algorithm Visualizer API',
-        version: '1.0.0',
+        message: 'Algo-Vis API',
+        version: '1.1.1',
         endpoints: {
             catalog: '/api/catalog',
             health: '/api/health',

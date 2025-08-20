@@ -1,4 +1,4 @@
-#include  <napi.h>
+#include <napi.h>
 #include <string>
 #include "TrackedStack.h"
 

@@ -28,7 +28,7 @@ app.get("/", (_req, res) => {
     res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
-const apiRoutes = require("./src/services/visualization_mapping/api/routes/index.js");
+const apiRoutes = require("./src/visualization_mapping/api/routes/index.js");
 app.use("/api", apiRoutes);
 
 // Health check
@@ -38,7 +38,7 @@ app.get("/health", (req, res) => {
         timestamp: new Date().toISOString(), // yr-m-d hr:min:sec:msec
         version: '1.0.0'
     });
-});''
+});
 
 app.listen(PORT, () => {
     console.log(`Server:    http://localhost:${PORT}`);

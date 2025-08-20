@@ -1,32 +1,31 @@
-#pragma once
-#include <stack>
-#include <vector>
+#pragma once 
+#include <queue>
 #include <memory>
 #include <optional>
+#include <vector>
 #include <string>
-#include "ExecutionTracer.h"
-
+#include "../core/ExecutionTracer.h"
 
 template<typename T>
-class TrackedStack {
+class TrackedQueue {
     private:
-        std::stack<T> stack;
+        std::queue<T> queue;
         std::shared_ptr<ExecutionTracer> tracer;
 
         void recordOp(
-            const std::string &op, 
-            const std::string &desc, 
+            const std::string &op,
+            const std::string &desc,
             const std::vector<int> &highlights = {}) const;
 
     public:
-        TrackedStack() {
+        TrackedQueue() {
             tracer = std::make_shared<ExecutionTracer>();
-            recordOp("init", "stack");
+            recordOp("init", "queue");
         }
 
-        void push(const T& val);
-        std::optional<T> pop();
-        std::optional<T> top();
+        void enqueue(const T& val);
+        std::optional<T> dequeue();
+        std::optional<T> front();
         bool isEmpty(bool track) const;
         int size() const;
         std::string getExecutionTrace() const;
@@ -35,7 +34,7 @@ class TrackedStack {
 };
 
 template<typename T>
-void TrackedStack<T>::recordOp(
+void TrackedQueue<T>::recordOp(
     const std::string &op, 
     const std::string &desc, 
     const std::vector<int> &highlights) const
@@ -49,67 +48,66 @@ void TrackedStack<T>::recordOp(
     std::vector<T> state = getCurrentState();
     step.state_snapshot = {
         {"elements", state},
-        {"size", stack.size()},
-        {"empty", stack.empty()}
+        {"size", queue.size()},
+        {"empty", queue.empty()}
     };
     tracer->recordStep(step);
 }
 
-// In case val is already a string, compiler will choose proper overload
-std::string stringify(const std::string& val) {
+inline std::string stringify(const std::string& val) {
     return val;
 }
 
 template<typename T>
-std::string stringify(const T& val) {
+inline std::string stringify(const T& val) {
     return std::to_string(val);
 }
 
 template<typename T>
-void TrackedStack<T>::push(const T& val) {
-    stack.push(val);
+void TrackedQueue<T>::enqueue(const T& val) {
+    queue.push(val);
     recordOp(
-        "push", 
-        "Pushed " + stringify(val), 
-        {static_cast<int>(stack.size() - 1)}
+        "enqueue", 
+        "Enqueued " + stringify(val), 
+        {static_cast<int>(queue.size() - 1)}
     );
 }
 
 template<typename T>
-std::optional<T> TrackedStack<T>::pop() {
-    if (stack.empty()) {
+std::optional<T> TrackedQueue<T>::dequeue() {
+    if (queue.empty()) {
         recordOp(
-            "stack underflow", 
-            "Attempted to pop from empty stack"
+            "queue underflow", 
+            "Attempted to dequeue from empty queue"
         );
         return std::nullopt;
     }
     
-    T val = stack.top();
-    stack.pop();
+    T val = queue.front();
+    queue.pop();
     recordOp(
-        "pop", 
-        "Popped " + stringify(val), 
-        {static_cast<int>(stack.size())}
+        "dequeue", 
+        "Dequeued " + stringify(val), 
+        {static_cast<int>(queue.size())}
     );
     return val;
 }
 
 template<typename T>
-std::optional<T> TrackedStack<T>::top() {
-    if (stack.empty()) return std::nullopt;
+std::optional<T> TrackedQueue<T>::front() {
+    if (queue.empty()) return std::nullopt;
 
-    T val = stack.top();
+    T val = queue.front();
     recordOp(
-        "peek", 
-        "Peeked at top: " + stringify(val)
+        "front", 
+        "Peeked at front: " + stringify(val)
     );
     return val;
 }
 
 template<typename T>
-bool TrackedStack<T>::isEmpty(bool track) const {
-    bool empty = stack.empty();
+bool TrackedQueue<T>::isEmpty(bool track) const {
+    bool empty = queue.empty();
     if (track) {
         recordOp(
             "empty", 
@@ -120,8 +118,8 @@ bool TrackedStack<T>::isEmpty(bool track) const {
 }
 
 template<typename T>
-int TrackedStack<T>::size() const {
-    int s = stack.size();
+int TrackedQueue<T>::size() const {
+    int s = queue.size();
     recordOp(
         "size", 
         std::to_string(s)
@@ -130,22 +128,22 @@ int TrackedStack<T>::size() const {
 }
 
 template<typename T>
-std::string TrackedStack<T>::getExecutionTrace() const {
+std::string TrackedQueue<T>::getExecutionTrace() const {
     return tracer->getTraceJson();
 }
 
 template<typename T>
-std::vector<T> TrackedStack<T>::getCurrentState() const {
+std::vector<T> TrackedQueue<T>::getCurrentState() const {
     std::vector<T> res;
-    std::stack<T> tmp = stack;
+    std::queue<T> tmp = queue;
     while (!tmp.empty()) {
-        res.insert(res.begin(), tmp.top());
+        res.push_back(tmp.front());
         tmp.pop();
     }
     return res;
 }
 
 template<typename T>
-void TrackedStack<T>::clear() {
-    while (!stack.empty()) stack.pop();
+void TrackedQueue<T>::clear() {
+    while (!queue.empty()) queue.pop();
 }
