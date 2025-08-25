@@ -13,9 +13,9 @@ router.get('/catalog', (req, res) => {
         status: 'success',
         data: {
             dataStructures: {
-                available: ['stack', 'queue'],
+                available: ['stack', 'queue', 'linkedlist'],
                 categories: {
-                    linear: ['stack', 'queue'], // Adding 'linkedlist' 
+                    linear: ['stack', 'queue', 'linkedlist'], 
                     trees: [], // Will have 'binarytree', 'bst', 'avl', 'heap'
                     graphs: [], // Will have 'graph', 'adjacencymatrix'
                     hash: [] // Will have 'hashtable'

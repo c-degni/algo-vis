@@ -30,15 +30,13 @@ class TrackedLinkedList {
 
         LinkedListNode<T>* findPrevNode(T val);
         LinkedListNode<T>* findNode(T val);
-        std::string getExecutionTrace() const;
-        std::vector<T> getCurrentState() const;
 
     public:
         TrackedLinkedList() {
             head = nullptr;
-            len = 0;
+            length = 0;
             tracer = std::make_shared<ExecutionTracer>();
-            recordOp("init", "linked-list");
+            recordOp("init", "linkedlist");
         }
 
         ~TrackedLinkedList() {
@@ -50,6 +48,8 @@ class TrackedLinkedList {
         std::optional<T> find(T val);
         int size();
         void clear(bool track);
+        std::string getExecutionTrace() const;
+        std::vector<T> getCurrentState() const;
 };
 
 template<typename T>
@@ -112,14 +112,15 @@ LinkedListNode<T>* TrackedLinkedList<T>::findPrevNode(T val) {
 
 template<typename T>
 LinkedListNode<T>* TrackedLinkedList<T>::findNode(T val) {
-    LinkedListNode<T>* prevNode = findPrevNode();
+    if (head != nullptr && head->data == val) return head;
+    LinkedListNode<T>* prevNode = findPrevNode(val);
     if (prevNode == nullptr) return nullptr;
     return prevNode->next;
 }
 
 template<typename T>
 std::optional<T> TrackedLinkedList<T>::find(T val) {
-    LinkedListNode<T>* foundNode = findNode();
+    LinkedListNode<T>* foundNode = findNode(val);
     if (foundNode == nullptr) return std::nullopt;
 
     recordOp(
@@ -142,6 +143,7 @@ void TrackedLinkedList<T>::insert(T val) {
         return;
     }
 
+    LinkedListNode<T>* tmp = head;
     while (tmp->next != nullptr) tmp = tmp->next;
     tmp->next = new LinkedListNode<T>(val);
 
@@ -150,23 +152,36 @@ void TrackedLinkedList<T>::insert(T val) {
         "insert", 
         "Inserted " + stringify(val)
     );
-    return;
 }
 
 template<typename T>
 std::optional<T> TrackedLinkedList<T>::remove(T val) {
-    LinkedListNode<T>* prev = findPrevNode();
+    if (head != nullptr && head->data == val) {
+        LinkedListNode<T>* nodeToRemove = head;
+        T removedData = head->data;
+        head = head->next;
+        delete nodeToRemove;
+        length--;
+
+        recordOp(
+            "remove", 
+            "Removed " + stringify(removedData)
+        );
+        return removedData;
+    }
+    
+    LinkedListNode<T>* prev = findPrevNode(val);
     if (prev == nullptr) return std::nullopt;
 
     LinkedListNode<T>* nodeToRemove = prev->next;
     T removedData = nodeToRemove->data;
     prev->next = nodeToRemove->next;
-    free(nodeToRemove);
+    delete nodeToRemove;
     length--;
 
     recordOp(
         "remove", 
-        "Removed " + stringify(nodeToRemove->data)
+        "Removed " + stringify(removedData)
     );
     return removedData;
 }
@@ -189,14 +204,14 @@ void TrackedLinkedList<T>::clear(bool track) {
     while (tmp != nullptr) {
         LinkedListNode<T>* tmp2 = tmp;
         tmp = tmp->next;
-        free(tmp2);
+        delete tmp2;
     }
 
     length = 0;
     if (track) {
         recordOp(
             "clear", 
-            "Cleared linked list")
+            "Cleared linked list"
         );
     }
 }

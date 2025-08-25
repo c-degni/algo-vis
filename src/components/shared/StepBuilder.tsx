@@ -11,7 +11,7 @@ interface Operation {
 }
 
 interface StepBuilderProps {
-    dataStructureType: 'stack' | 'queue';
+    dataStructureType: 'stack' | 'queue' | 'linkedlist';
     dataType: 'int' | 'double' | 'float' | 'bool' | 'string';
     onExecute: (operations: Operation[]) => void;
     isExecuting?: boolean;
@@ -33,6 +33,13 @@ const DATA_STRUCTURE_OPERATIONS = {
         { type: 'front', needsValue: false, description: 'View front element' },
         { type: 'size', needsValue: false, description: 'Get size' },
         { type: 'empty', needsValue: false, description: 'Check if empty' },
+        { type: 'clear', needsValue: false, description: 'Remove all elements' }
+    ],
+    linkedlist: [
+        { type: 'insert', needsValue: true, description: 'Add an element' },
+        { type: 'remove', needsValue: false, description: 'Remove an element' },
+        { type: 'find', needsValue: false, description: 'Find an element' },
+        { type: 'size', needsValue: false, description: 'Get size' },
         { type: 'clear', needsValue: false, description: 'Remove all elements' }
     ]
 };
@@ -61,6 +68,19 @@ const PRESET_SEQUENCES = {
                 { type: 'front' },
                 { type: 'dequeue' },
                 { type: 'dequeue' }
+            ]
+        }
+    ],
+    linkedlist: [
+        {
+            name: 'LL Demo',
+            operations: [
+                { type: 'insert', value: 10 },
+                { type: 'insert', value: 20 },
+                { type: 'insert', value: 30 },
+                { type: 'find', value: 10 },
+                { type: 'remove', value: 30 },
+                { type: 'remove', value: 10 }
             ]
         }
     ]
