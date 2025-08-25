@@ -82,33 +82,6 @@ const PRESET_SEQUENCES = {
                 { type: 'remove', value: 30 },
                 { type: 'remove', value: 10 }
             ]
-        },
-        {
-            name: 'Test',
-            operations: [
-                { type: 'insert', value: 10 },
-                { type: 'insert', value: 20 },
-                { type: 'insert', value: 30 },
-                { type: 'insert', value: 10 },
-                { type: 'insert', value: 20 },
-                { type: 'insert', value: 30 },
-                { type: 'insert', value: 10 },
-                { type: 'insert', value: 20 },
-                { type: 'insert', value: 30 },
-                { type: 'insert', value: 10 },
-                { type: 'insert', value: 20 },
-                { type: 'insert', value: 30 },
-                { type: 'insert', value: 10 },
-                { type: 'insert', value: 20 },
-                { type: 'insert', value: 30 },
-                { type: 'insert', value: 10 },
-                { type: 'insert', value: 20 },
-                { type: 'insert', value: 30 },
-                { type: 'insert', value: 10 },
-                { type: 'insert', value: 20 },
-                { type: 'remove', value: 30 },
-                { type: 'remove', value: 30 }
-            ]
         }
     ]
 };
