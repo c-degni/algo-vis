@@ -37,8 +37,8 @@ const DATA_STRUCTURE_OPERATIONS = {
     ],
     linkedlist: [
         { type: 'insert', needsValue: true, description: 'Add an element' },
-        { type: 'remove', needsValue: false, description: 'Remove an element' },
-        { type: 'find', needsValue: false, description: 'Find an element' },
+        { type: 'remove', needsValue: true, description: 'Remove an element' },
+        { type: 'find', needsValue: true, description: 'Find an element' },
         { type: 'size', needsValue: false, description: 'Get size' },
         { type: 'clear', needsValue: false, description: 'Remove all elements' }
     ]
