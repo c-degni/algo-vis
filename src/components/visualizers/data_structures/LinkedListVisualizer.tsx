@@ -112,18 +112,18 @@ export default function LinkedListVisualizer({ elements = [], highlights = [] }:
                             .attr('stroke-width', 2)
                             .attr('marker-end', 'url(#arrowhead)');
                     } else {
-                        // Different rows - curved arrow
+                        // Different rows
                         const arrowStartX = currentX + nodeWidth / 2;
-                        const arrowStartY = currentY + nodeHeight;
+                        const arrowStartY = currentY + nodeHeight - 30; // Bottom of current node
                         const arrowEndX = nextX + nodeWidth / 2;
-                        const arrowEndY = nextY;
+                        const arrowEndY = nextY - nodeHeight / 2; // Top of next node
+                        const midY = (arrowStartY + arrowEndY) / 2 - 2; // Halfway between rows
 
-                        // Curved path
-                        const midY = arrowStartY + 20;
                         svg.append('path')
                             .attr('d', `M ${arrowStartX} ${arrowStartY} 
-                                Q ${arrowStartX} ${midY} ${arrowEndX} ${midY}
-                                Q ${arrowEndX} ${midY} ${arrowEndX} ${arrowEndY}`)
+                                L ${arrowStartX} ${midY}
+                                L ${arrowEndX} ${midY}
+                                L ${arrowEndX} ${arrowEndY}`)
                             .attr('stroke', '#374151')
                             .attr('stroke-width', 2)
                             .attr('fill', 'none')
@@ -146,7 +146,7 @@ export default function LinkedListVisualizer({ elements = [], highlights = [] }:
                 .attr('d', 'M0,0 L0,6 L9,3 z')
                 .attr('fill', '#374151');
 
-            // HEAD label and arrow (pointing to first element)
+            // HEAD label and arrow
             if (elements.length > 0) {
                 const headX = startX + nodeWidth / 2;
                 svg.append('text')
@@ -168,7 +168,7 @@ export default function LinkedListVisualizer({ elements = [], highlights = [] }:
                     .attr('fill', 'none');
             }
 
-            // TAIL label and arrow (pointing to last element)
+            // TAIL label and arrow
             if (elements.length > 0) {
                 const lastIndex = elements.length - 1;
                 const lastRow = Math.floor(lastIndex / nodesPerRow);
