@@ -40,10 +40,12 @@ class LinkedListController {
                     case 'insert': 
                         ll.insert(op.value); 
                         break;
-                    case 'remove': 
+                    case 'remove':
+                        if (!ll.inList(op.value)) throw new Error('Not found');
                         ll.remove(op.value); 
                         break;
                     case 'find': 
+                        if (!ll.inList(op.value)) throw new Error('Not found');
                         ll.find(op.value); 
                         break;
                     case 'size': 
@@ -63,10 +65,17 @@ class LinkedListController {
             
         } catch (error) {
             console.error("❌ LinkedListController error:", error.message);
-            res.status(500).json({ 
-                error: error.message,
-                errorType: 'GENERAL_ERROR',
-            });
+            if (error.message.includes('found')) {
+                res.status(400).json({ 
+                    error: error.message,
+                    errorType: 'NOT_FOUND',
+                });
+            } else {
+                res.status(500).json({ 
+                    error: error.message,
+                    errorType: 'GENERAL_ERROR',
+                });
+            }
         }
     }
 }

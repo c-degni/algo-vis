@@ -48,6 +48,7 @@ class TrackedLinkedList {
         std::optional<T> find(T val);
         int size();
         void clear();
+        bool inList(T val);
         std::string getExecutionTrace() const;
         std::vector<T> getCurrentState() const;
 };
@@ -128,6 +129,11 @@ std::optional<T> TrackedLinkedList<T>::find(T val) {
         "Found " + stringify(foundNode->data)
     );
     return foundNode->data;
+}
+
+template<typename T>
+bool TrackedLinkedList<T>::inList(T val) {
+    return findNode(val) != nullptr;
 }
 
 template<typename T>

@@ -14,6 +14,7 @@ class TypeName##LinkedListWrapper : public Napi::ObjectWrap<TypeName##LinkedList
                 InstanceMethod("remove", &TypeName##LinkedListWrapper::Remove),                                                     \
                 InstanceMethod("find", &TypeName##LinkedListWrapper::Find),                                                         \
                 InstanceMethod("size", &TypeName##LinkedListWrapper::Size),                                                         \
+                InstanceMethod("inList", &TypeName##LinkedListWrapper::InList),                                                     \
                 InstanceMethod("getTrace", &TypeName##LinkedListWrapper::GetTrace)                                                  \
             });                                                                                                                     \
             exports.Set(#TypeName "LinkedList", f);                                                                                 \
@@ -58,7 +59,7 @@ class TypeName##LinkedListWrapper : public Napi::ObjectWrap<TypeName##LinkedList
             CppType val = info[0].JsConvert();                                                                                      \
             auto found = ll.find(val);                                                                                              \
             if (!found.has_value()) {                                                                                               \
-                Napi::Error::New(env, "Not in linked list").ThrowAsJavaScriptException();                                 \
+                Napi::Error::New(env, "Not in linked list").ThrowAsJavaScriptException();                                           \
                 return env.Null();                                                                                                  \
             }                                                                                                                       \
             return JsCreate(env, *found);                                                                                           \
@@ -67,6 +68,16 @@ class TypeName##LinkedListWrapper : public Napi::ObjectWrap<TypeName##LinkedList
         Napi::Value Size(const Napi::CallbackInfo &info) {                                                                          \
             Napi::Env env = info.Env();                                                                                             \
             return Napi::Number::New(env, ll.size());                                                                               \
+        }                                                                                                                           \
+                                                                                                                                    \
+        Napi::Value InList(const Napi::CallbackInfo& info) {                                                                        \
+            Napi::Env env = info.Env();                                                                                             \
+            if (info.Length() < 1 || !info[0].JsCheck()) {                                                                          \
+                Napi::TypeError::New(env, #CppType " expected").ThrowAsJavaScriptException();                                       \
+                return env.Null();                                                                                                  \
+            }                                                                                                                       \
+            CppType val = info[0].JsConvert();                                                                                      \
+            return Napi::Boolean::New(env, ll.inList(val));                                                                         \
         }                                                                                                                           \
                                                                                                                                     \
         Napi::Value GetTrace(const Napi::CallbackInfo& info) {                                                                      \

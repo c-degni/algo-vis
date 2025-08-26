@@ -43,7 +43,13 @@ export default function LinkedListPage() {
 
             const data = await response.json();
 
-            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);  
+            if (!response.ok) {
+                if (data.errorType === 'NOT_FOUND') {
+                    throw new Error('Value does not exist in the linked list!');
+                } else {
+                    throw new Error(`HTTP error! Status: ${response.status}`);  
+                }
+            } 
 
             setTrace(data.trace || []);
             
@@ -54,7 +60,11 @@ export default function LinkedListPage() {
             }
         } catch (error) {
             console.error('Failed to execute operations:', error);
-            alert(`Failed to execute operations. Make sure the backend is running.\n${error.message}`);
+            if (error.message.includes('Value does not exist')) {  
+                alert(`${error.message}`);
+            } else {
+                alert(`Failed to execute operations. Make sure the backend is running.\n${error.message}`);
+            }
         } finally {
             setIsExecuting(false);
         }
