@@ -11,7 +11,7 @@ interface Operation {
 }
 
 interface StepBuilderProps {
-    dataStructureType: 'stack' | 'queue';
+    dataStructureType: 'stack' | 'queue' | 'linkedlist';
     dataType: 'int' | 'double' | 'float' | 'bool' | 'string';
     onExecute: (operations: Operation[]) => void;
     isExecuting?: boolean;
@@ -24,16 +24,20 @@ const DATA_STRUCTURE_OPERATIONS = {
         { type: 'pop', needsValue: false, description: 'Remove top element' },
         { type: 'top', needsValue: false, description: 'View top element' },
         { type: 'size', needsValue: false, description: 'Get size' },
-        { type: 'empty', needsValue: false, description: 'Check if empty' },
-        { type: 'clear', needsValue: false, description: 'Remove all elements' }
+        { type: 'empty', needsValue: false, description: 'Check if empty' }
     ],
     queue: [
         { type: 'enqueue', needsValue: true, description: 'Add element to back' },
         { type: 'dequeue', needsValue: false, description: 'Remove front element' },
         { type: 'front', needsValue: false, description: 'View front element' },
         { type: 'size', needsValue: false, description: 'Get size' },
-        { type: 'empty', needsValue: false, description: 'Check if empty' },
-        { type: 'clear', needsValue: false, description: 'Remove all elements' }
+        { type: 'empty', needsValue: false, description: 'Check if empty' }
+    ],
+    linkedlist: [
+        { type: 'insert', needsValue: true, description: 'Add an element' },
+        { type: 'remove', needsValue: true, description: 'Remove an element' },
+        { type: 'find', needsValue: true, description: 'Find an element' },
+        { type: 'size', needsValue: false, description: 'Get size' }
     ]
 };
 
@@ -61,6 +65,19 @@ const PRESET_SEQUENCES = {
                 { type: 'front' },
                 { type: 'dequeue' },
                 { type: 'dequeue' }
+            ]
+        }
+    ],
+    linkedlist: [
+        {
+            name: 'LL Demo',
+            operations: [
+                { type: 'insert', value: 10 },
+                { type: 'insert', value: 20 },
+                { type: 'insert', value: 30 },
+                { type: 'find', value: 10 },
+                { type: 'remove', value: 30 },
+                { type: 'remove', value: 10 }
             ]
         }
     ]
@@ -123,7 +140,7 @@ export default function StepBuilder({
 
     useEffect(() => {
         setOperations(prev => prev.filter(op => {
-            if (!op.value) return true; // Keep ops without vals like pop and clear
+            if (!op.value) return true; // Keep ops without vals like pop
             
             const parsedVal = parseValue(op.value.toString(), dataType);
             return valueIsCorrectType(parsedVal, dataType);

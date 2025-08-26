@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import StackPage from './components/pages/StackPage';
 import QueuePage from './components/pages/QueuePage';
+import LinkedListPage from './components/pages/LinkedListPage';
 
 export default function App() {
     return (
@@ -29,6 +30,12 @@ export default function App() {
                                 >
                                     Queue
                                 </Link>
+                                <Link 
+                                    to="/linkedlist" 
+                                    className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
+                                >
+                                    Linked List
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -40,6 +47,7 @@ export default function App() {
                         <Route path="/" element={<HomePage />} />
                         <Route path="/stack" element={<StackPage />} />
                         <Route path="/queue" element={<QueuePage />} />
+                        <Route path="/linkedlist" element={<LinkedListPage />} />
                     </Routes>
                 </main>
             </div>
@@ -71,6 +79,13 @@ function HomePage() {
                 >
                     <h3 className="text-xl font-semibold text-gray-800 mb-2">Queue</h3>
                     <p className="text-gray-600">FIFO (First In, First Out) data structure</p>
+                </Link>
+                <Link 
+                    to="/linkedlist"
+                    className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                >
+                    <h3 className="text-xl font-semibold text-gray-800 mb-2">Linked List</h3>
+                    <p className="text-gray-600">Linear data structure</p>
                 </Link>
             </div>
         </div>

@@ -1,27 +1,27 @@
 const ds = require("../../../../build/Release/data_structures");
 
-class QueueController {
+class LinkedListController {
     static async executeOperations(req, res) {
         try {
             console.log("✅ Received request:", req.body);
             const { operations, dataType } = req.body;
     
-            let queue;
+            let ll;
             switch (dataType.toLowerCase()) {
                 case "int":
-                    queue = new ds.IntQueue();
+                    ll = new ds.IntLinkedList();
                     break;
                 case "double":
-                    queue = new ds.DoubleQueue();
+                    ll = new ds.DoubleLinkedList();
                     break;
                 case "float":
-                    queue = new ds.FloatQueue();
+                    ll = new ds.FloatLinkedList();
                     break;
                 case "bool":
-                    queue = new ds.BoolQueue();
+                    ll = new ds.BoolLinkedList();
                     break; 
                 case "string":
-                    queue = new ds.StringQueue();
+                    ll = new ds.StringLinkedList();
                     break; 
                 default:
                     return res.status(400).json({ error: 'Unsupported data type' });
@@ -37,41 +37,38 @@ class QueueController {
                 });
 
                 switch (op.type) {
-                    case 'enqueue': 
-                        queue.enqueue(op.value); 
+                    case 'insert': 
+                        ll.insert(op.value); 
                         break;
-                    case 'dequeue': 
-                        if (queue.empty()) throw new Error('Queue underflow');
-                        queue.dequeue(); 
+                    case 'remove':
+                        if (!ll.inList(op.value)) throw new Error('Not found');
+                        ll.remove(op.value); 
                         break;
-                    case 'front': 
-                        if (queue.empty()) throw new Error('Queue underflow');
-                        queue.front(); 
+                    case 'find': 
+                        if (!ll.inList(op.value)) throw new Error('Not found');
+                        ll.find(op.value); 
                         break;
                     case 'size': 
-                        queue.size(); 
-                        break;
-                    case 'empty': 
-                        queue.isEmpty(); 
+                        ll.size(); 
                         break;
                 }
             });
             
-            const trace = JSON.parse(queue.getTrace());
+            const trace = JSON.parse(ll.getTrace());
             console.log("✅ Generated trace with", trace.length, "steps");
     
             res.json({ 
                 trace, 
-                dataStructure: "queue",
+                dataStructure: "linkedlist",
                 dataType 
             });
             
         } catch (error) {
-            console.error("❌ QueueController error:", error.message);
-            if (error.message.includes('underflow')) {
+            console.error("❌ LinkedListController error:", error.message);
+            if (error.message.includes('found')) {
                 res.status(400).json({ 
                     error: error.message,
-                    errorType: 'QUEUE_UNDERFLOW',
+                    errorType: 'NOT_FOUND',
                 });
             } else {
                 res.status(500).json({ 
@@ -83,4 +80,4 @@ class QueueController {
     }
 }
 
-module.exports = QueueController;
+module.exports = LinkedListController;

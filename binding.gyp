@@ -7,6 +7,7 @@
                 "src/visualization_mapping/cpp/core/DataStructureBindings.cpp",
                 "src/visualization_mapping/cpp/translation/StackWrapper.cpp",
                 "src/visualization_mapping/cpp/translation/QueueWrapper.cpp",
+                "src/visualization_mapping/cpp/translation/LinkedListWrapper.cpp",
             ],
             "include_dirs": [
                 "<!@(node -p \"require('node-addon-api').include\")",

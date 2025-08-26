@@ -54,9 +54,6 @@ class StackController {
                     case 'empty': 
                         stack.isEmpty(); 
                         break;
-                    case 'clear': 
-                        stack.clear(); 
-                        break;
                 }
             });
             
@@ -71,7 +68,6 @@ class StackController {
             
         } catch (error) {
             console.error("❌ StackController error:", error.message);
-
             if (error.message.includes('underflow')) {
                 res.status(400).json({ 
                     error: error.message,

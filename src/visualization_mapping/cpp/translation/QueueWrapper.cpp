@@ -16,7 +16,6 @@ class TypeName##QueueWrapper : public Napi::ObjectWrap<TypeName##QueueWrapper> {
                 InstanceMethod("empty", &TypeName##QueueWrapper::Empty),                                                \
                 InstanceMethod("isEmpty", &TypeName##QueueWrapper::IsEmpty),                                            \
                 InstanceMethod("size", &TypeName##QueueWrapper::Size),                                                  \
-                InstanceMethod("clear", &TypeName##QueueWrapper::Clear),                                                \
                 InstanceMethod("getTrace", &TypeName##QueueWrapper::GetTrace)                                           \
             });                                                                                                         \
             exports.Set(#TypeName "Queue", f);                                                                          \
@@ -70,12 +69,6 @@ class TypeName##QueueWrapper : public Napi::ObjectWrap<TypeName##QueueWrapper> {
         Napi::Value IsEmpty(const Napi::CallbackInfo& info) {                                                           \
             Napi::Env env = info.Env();                                                                                 \
             return Napi::Boolean::New(env, queue.isEmpty(true));                                                        \
-        }                                                                                                               \
-                                                                                                                        \
-        Napi::Value Clear(const Napi::CallbackInfo& info) {                                                             \
-            Napi::Env env = info.Env();                                                                                 \
-            queue.clear();                                                                                              \
-            return env.Undefined();                                                                                     \
         }                                                                                                               \
                                                                                                                         \
         Napi::Value GetTrace(const Napi::CallbackInfo& info) {                                                          \
