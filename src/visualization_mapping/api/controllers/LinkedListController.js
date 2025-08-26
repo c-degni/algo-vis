@@ -49,9 +49,6 @@ class LinkedListController {
                     case 'size': 
                         ll.size(); 
                         break;
-                    case 'clear': 
-                        ll.clear(); 
-                        break;
                 }
             });
             

@@ -24,23 +24,20 @@ const DATA_STRUCTURE_OPERATIONS = {
         { type: 'pop', needsValue: false, description: 'Remove top element' },
         { type: 'top', needsValue: false, description: 'View top element' },
         { type: 'size', needsValue: false, description: 'Get size' },
-        { type: 'empty', needsValue: false, description: 'Check if empty' },
-        { type: 'clear', needsValue: false, description: 'Remove all elements' }
+        { type: 'empty', needsValue: false, description: 'Check if empty' }
     ],
     queue: [
         { type: 'enqueue', needsValue: true, description: 'Add element to back' },
         { type: 'dequeue', needsValue: false, description: 'Remove front element' },
         { type: 'front', needsValue: false, description: 'View front element' },
         { type: 'size', needsValue: false, description: 'Get size' },
-        { type: 'empty', needsValue: false, description: 'Check if empty' },
-        { type: 'clear', needsValue: false, description: 'Remove all elements' }
+        { type: 'empty', needsValue: false, description: 'Check if empty' }
     ],
     linkedlist: [
         { type: 'insert', needsValue: true, description: 'Add an element' },
         { type: 'remove', needsValue: true, description: 'Remove an element' },
         { type: 'find', needsValue: true, description: 'Find an element' },
-        { type: 'size', needsValue: false, description: 'Get size' },
-        { type: 'clear', needsValue: false, description: 'Remove all elements' }
+        { type: 'size', needsValue: false, description: 'Get size' }
     ]
 };
 
@@ -143,7 +140,7 @@ export default function StepBuilder({
 
     useEffect(() => {
         setOperations(prev => prev.filter(op => {
-            if (!op.value) return true; // Keep ops without vals like pop and clear
+            if (!op.value) return true; // Keep ops without vals like pop
             
             const parsedVal = parseValue(op.value.toString(), dataType);
             return valueIsCorrectType(parsedVal, dataType);

@@ -40,14 +40,14 @@ class TrackedLinkedList {
         }
 
         ~TrackedLinkedList() {
-            clear(false);
+            clear();
         }
 
         void insert(T val);
         std::optional<T> remove(T val);
         std::optional<T> find(T val);
         int size();
-        void clear(bool track);
+        void clear();
         std::string getExecutionTrace() const;
         std::vector<T> getCurrentState() const;
 };
@@ -196,8 +196,7 @@ int TrackedLinkedList<T>::size() {
 }
 
 template<typename T>
-void TrackedLinkedList<T>::clear(bool track) {
-
+void TrackedLinkedList<T>::clear() {
     if (head == nullptr) return;
 
     LinkedListNode<T>* tmp = head;
@@ -207,11 +206,6 @@ void TrackedLinkedList<T>::clear(bool track) {
         delete tmp2;
     }
 
+    head = nullptr;
     length = 0;
-    if (track) {
-        recordOp(
-            "clear", 
-            "Cleared linked list"
-        );
-    }
 }

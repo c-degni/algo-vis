@@ -54,9 +54,6 @@ class QueueController {
                     case 'empty': 
                         queue.isEmpty(); 
                         break;
-                    case 'clear': 
-                        queue.clear(); 
-                        break;
                 }
             });
             

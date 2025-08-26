@@ -14,7 +14,6 @@ class TypeName##LinkedListWrapper : public Napi::ObjectWrap<TypeName##LinkedList
                 InstanceMethod("remove", &TypeName##LinkedListWrapper::Remove),                                                     \
                 InstanceMethod("find", &TypeName##LinkedListWrapper::Find),                                                         \
                 InstanceMethod("size", &TypeName##LinkedListWrapper::Size),                                                         \
-                InstanceMethod("clear", &TypeName##LinkedListWrapper::Clear),                                                       \
                 InstanceMethod("getTrace", &TypeName##LinkedListWrapper::GetTrace)                                                  \
             });                                                                                                                     \
             exports.Set(#TypeName "LinkedList", f);                                                                                 \
@@ -68,12 +67,6 @@ class TypeName##LinkedListWrapper : public Napi::ObjectWrap<TypeName##LinkedList
         Napi::Value Size(const Napi::CallbackInfo &info) {                                                                          \
             Napi::Env env = info.Env();                                                                                             \
             return Napi::Number::New(env, ll.size());                                                                               \
-        }                                                                                                                           \
-                                                                                                                                    \
-        Napi::Value Clear(const Napi::CallbackInfo& info) {                                                                         \
-            Napi::Env env = info.Env();                                                                                             \
-            ll.clear(true);                                                                                                         \
-            return env.Undefined();                                                                                                 \
         }                                                                                                                           \
                                                                                                                                     \
         Napi::Value GetTrace(const Napi::CallbackInfo& info) {                                                                      \

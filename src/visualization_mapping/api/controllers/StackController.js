@@ -54,9 +54,6 @@ class StackController {
                     case 'empty': 
                         stack.isEmpty(); 
                         break;
-                    case 'clear': 
-                        stack.clear(); 
-                        break;
                 }
             });
             
