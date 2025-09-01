@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import StackPage from './components/pages/StackPage';
 import QueuePage from './components/pages/QueuePage';
 import LinkedListPage from './components/pages/LinkedListPage';
+import BinaryTreePage from './components/pages/BinaryTreePage';
 
 export default function App() {
     return (
@@ -36,6 +37,12 @@ export default function App() {
                                 >
                                     Linked List
                                 </Link>
+                                <Link 
+                                    to="/binarytree" 
+                                    className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
+                                >
+                                    Binary Tree
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -48,6 +55,7 @@ export default function App() {
                         <Route path="/stack" element={<StackPage />} />
                         <Route path="/queue" element={<QueuePage />} />
                         <Route path="/linkedlist" element={<LinkedListPage />} />
+                        <Route path="/binarytree" element={<BinaryTreePage />} />
                     </Routes>
                 </main>
             </div>
@@ -86,6 +94,13 @@ function HomePage() {
                 >
                     <h3 className="text-xl font-semibold text-gray-800 mb-2">Linked List</h3>
                     <p className="text-gray-600">Linear data structure</p>
+                </Link>
+                <Link 
+                    to="/binarytree"
+                    className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                >
+                    <h3 className="text-xl font-semibold text-gray-800 mb-2">Binary tree</h3>
+                    <p className="text-gray-600">Classic binary tree</p>
                 </Link>
             </div>
         </div>

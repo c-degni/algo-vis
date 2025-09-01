@@ -11,7 +11,7 @@ interface Operation {
 }
 
 interface StepBuilderProps {
-    dataStructureType: 'stack' | 'queue' | 'linkedlist';
+    dataStructureType: 'stack' | 'queue' | 'linkedlist' | 'binarytree';
     dataType: 'int' | 'double' | 'float' | 'bool' | 'string';
     onExecute: (operations: Operation[]) => void;
     isExecuting?: boolean;
@@ -38,6 +38,16 @@ const DATA_STRUCTURE_OPERATIONS = {
         { type: 'remove', needsValue: true, description: 'Remove an element' },
         { type: 'find', needsValue: true, description: 'Find an element' },
         { type: 'size', needsValue: false, description: 'Get size' }
+    ],
+    binarytree: [
+        { type: 'insert', needsValue: true, description: 'Add an element' },
+        { type: 'remove', needsValue: true, description: 'Remove an element' },
+        { type: 'find', needsValue: true, description: 'Find an element' },
+        { type: 'size', needsValue: false, description: 'Get size' },
+        { type: 'getHeight', needsValue: false, description: 'Get height' },
+        { type: 'inorder', needsValue: false, description: 'Inorder traversal' },
+        { type: 'preorder', needsValue: false, description: 'Preorder traversal' },
+        { type: 'postorder', needsValue: false, description: 'Postorder traversal' }
     ]
 };
 
@@ -78,6 +88,22 @@ const PRESET_SEQUENCES = {
                 { type: 'find', value: 10 },
                 { type: 'remove', value: 30 },
                 { type: 'remove', value: 10 }
+            ]
+        }
+    ],
+    binarytree: [
+        {
+            name: 'Classic BT Demo',
+            operations: [
+                { type: 'insert', value: 12 },
+                { type: 'insert', value: 9 },
+                { type: 'insert', value: 15 },
+                { type: 'insert', value: 14 },
+                { type: 'insert', value: 7 },
+                { type: 'insert', value: 10 },
+                { type: 'find', value: 10 },
+                { type: 'remove', value: 9 },
+                { type: 'remove', value: 14 }
             ]
         }
     ]
