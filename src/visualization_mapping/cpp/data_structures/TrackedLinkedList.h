@@ -27,7 +27,6 @@ class TrackedLinkedList {
             const std::string &op,
             const std::string &desc,
             const std::vector<int> &highlights = {}) const;
-
         LinkedListNode<T>* findPrevNode(T val);
         LinkedListNode<T>* findNode(T val);
 
