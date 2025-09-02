@@ -45,7 +45,7 @@ export default function BinaryTreePage() {
 
             if (!response.ok) {
                 if (data.errorType === 'NOT_FOUND') {
-                    throw new Error('Value does not exist in the linked list!');
+                    throw new Error('Value does not exist in the binary tree!');
                 } else {
                     throw new Error(`HTTP error! Status: ${response.status}`);  
                 }
