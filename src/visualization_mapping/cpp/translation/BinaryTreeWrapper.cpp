@@ -15,8 +15,8 @@ class TypeName##BinaryTreeWrapper : public Napi::ObjectWrap<TypeName##BinaryTree
                 InstanceMethod("find", &TypeName##BinaryTreeWrapper::Find),                                                         \
                 InstanceMethod("size", &TypeName##BinaryTreeWrapper::Size),                                                         \
                 InstanceMethod("getHeight", &TypeName##BinaryTreeWrapper::GetHeight),                                               \
-                InstanceMethod("inorder", &TypeName##BinaryTreeWrapper::Preorder),                                                  \
-                InstanceMethod("preorder", &TypeName##BinaryTreeWrapper::Inorder),                                                  \
+                InstanceMethod("inorder", &TypeName##BinaryTreeWrapper::Inorder),                                                  \
+                InstanceMethod("preorder", &TypeName##BinaryTreeWrapper::Preorder),                                                  \
                 InstanceMethod("postorder", &TypeName##BinaryTreeWrapper::Postorder),                                               \
                 InstanceMethod("inTree", &TypeName##BinaryTreeWrapper::InTree),                                                     \
                 InstanceMethod("getTrace", &TypeName##BinaryTreeWrapper::GetTrace)                                                  \

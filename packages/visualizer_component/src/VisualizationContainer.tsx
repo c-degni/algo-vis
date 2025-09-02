@@ -3,6 +3,7 @@ import ExecutionPlayer from '../../../src/components/shared/ExecutionPlayer';
 import StackVisualizer from '../../../src/components/visualizers/data_structures/StackVisualizer';
 import QueueVisualizer from '../../../src/components/visualizers/data_structures/QueueVisualizer';
 import LinkedListVisualizer from '../../../src/components/visualizers/data_structures/LinkedListVisualizer';
+import BinaryTreeVisualizer from '../../../src/components/visualizers/data_structures/BinaryTreeVisualizer';
 
 interface Operation {
     type: string;
@@ -11,7 +12,7 @@ interface Operation {
 
 interface VisualizationContainerProps {
     apiEndpoint: string;
-    dataStructure: 'stack' | 'queue' | 'linkedlist';
+    dataStructure: 'stack' | 'queue' | 'linkedlist' | 'binarytree';
     dataType: 'int' | 'double' | 'float' | 'bool' | 'string';
     operations: Operation[];
     onError?: (error: string) => void;
@@ -79,6 +80,14 @@ export default function VisualizationContainer({
                 return (
                     <LinkedListVisualizer
                         elements={currentState?.elements || []}
+                        highlights={currentHighlights}
+                    />
+                );
+            case 'binarytree':
+                return (
+                    <BinaryTreeVisualizer
+                        inorder={currentState?.inorder || []}
+                        preorder={currentState?.preorder || []}
                         highlights={currentHighlights}
                     />
                 );

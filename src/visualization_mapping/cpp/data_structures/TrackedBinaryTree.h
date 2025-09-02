@@ -128,7 +128,7 @@ std::string TrackedBinaryTree<T>::inorder() {
     res = inorder(res, root);
 
     std::string str;
-    for (T item : res) str += stringify(item);
+    for (T item : res) str += (stringify(item) + " ");
     
     recordOp(
         "inorder",
@@ -155,7 +155,7 @@ std::string TrackedBinaryTree<T>::preorder() {
     res = preorder(res, root);
 
     std::string str;
-    for (T item : res) str += stringify(item);
+    for (T item : res) str += (stringify(item) + " ");
     
     recordOp(
         "preorder",
