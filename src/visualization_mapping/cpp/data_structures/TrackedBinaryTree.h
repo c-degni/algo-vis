@@ -244,8 +244,11 @@ BinaryTreeNode<T>* TrackedBinaryTree<T>::findNodeParent(T val, BinaryTreeNode<T>
     if ((node->left != nullptr && node->left->data == val) || (node->right != nullptr && node->right->data == val)) return node;
 
     // Recursive
-    if (node->data < val) return findNodeParent(val, node->left);
-    return findNodeParent(val, node->right);
+    if (node->data > val) {
+        return findNodeParent(val, node->left);
+    } else {
+        return findNodeParent(val, node->right);
+    }
 }
 
 template<typename T>
