@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "build-cpp": "node-gyp rebuild",
-    "start": "concurrently \"npm run build-cpp && node server.js\" \"npm run start:react\"",
+    "start": "concurrently \"node server.js\" \"npm run start:react\"",
     "build": "npm run build:react",
     "dev": "concurrently --kill-others-on-fail --prefix-colors \"bgBlue.bold,bgGreen.bold\" \"npm run start\" \"npm run start:react\"",
     "start:react": "react-scripts start",
