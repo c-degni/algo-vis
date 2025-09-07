@@ -1,4 +1,6 @@
-const ds = require("../../../../build/Release/data_structures");
+// const ds = require("../../../../build/Release/data_structures");
+const path = require('path');
+const dataStructures = require(path.join(process.cwd(), 'build/Release/data_structures'));
 
 class StackController {
     static async executeOperations(req, res) {
