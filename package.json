@@ -6,7 +6,8 @@
   "scripts": {
     "build-cpp": "node-gyp rebuild",
     "start": "node server.js",
-    "dev": "concurrently --prefix-colors \"bgBlue.bold,bgGreen.bold\" \"npm run start\" \"npm run start:react\"",
+    "build": "npm run build-cpp && npm run build:react",
+    "dev": "concurrently --kill-others-on-fail --prefix-colors \"bgBlue.bold,bgGreen.bold\" \"npm run start\" \"npm run start:react\"",
     "start:react": "react-scripts start",
     "dev:frontend": "npm run start:react",
     "build:react": "react-scripts build",
