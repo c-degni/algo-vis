@@ -40,7 +40,7 @@ app.get("/health", (req, res) => {
     });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server:    http://localhost:${PORT}`);
     console.log(`API:       http://localhost:${PORT}/api`);
     console.log(`Health:    http://localhost:${PORT}/health`);
