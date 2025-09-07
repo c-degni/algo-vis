@@ -1,9 +1,9 @@
 nlp-env/
 node_modules/
-build/binding.Makefile
-build/config.gypi
-build/data_structures.target.mk
-build/gyp-mac-tool
-build/Makefile
-build/Release/.deps
-build/Release/obj.target
+# build/binding.Makefile
+# build/config.gypi
+# build/data_structures.target.mk
+# build/gyp-mac-tool
+# build/Makefile
+# build/Release/.deps
+# build/Release/obj.target
