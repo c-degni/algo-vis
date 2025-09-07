@@ -11,6 +11,7 @@ interface Operation {
 }
 
 interface StepBuilderProps {
+    key: 'int' | 'double' | 'float' | 'bool' | 'string';
     dataStructureType: 'stack' | 'queue' | 'linkedlist' | 'binarytree';
     dataType: 'int' | 'double' | 'float' | 'bool' | 'string';
     onExecute: (operations: Operation[]) => void;
