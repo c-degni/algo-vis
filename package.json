@@ -1,6 +1,7 @@
 {
   "name": "algo-vis",
   "version": "1.1.0",
+  "private": true,
   "description": "Interactive data structure and algorithm visualizer",
   "main": "server.js",
   "scripts": {
@@ -55,7 +56,6 @@
       "last 1 safari version"
     ],
     "workspaces": [
-      ".",
       "packages/*"
     ]
   }
