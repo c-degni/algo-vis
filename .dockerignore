@@ -4,8 +4,6 @@ build/config.gypi
 build/data_structures.target.mk
 build/gyp-mac-tool
 build/Makefile
-build/Release/.deps
-build/Release/obj.target
 dist
 .nyc_output
 coverage
