@@ -6,7 +6,7 @@
   "main": "server.js",
   "scripts": {
     "build-cpp": "node-gyp rebuild",
-    "build-react": "react-scripts build",
+    "build-react": "npm run build-cpp && react-scripts build",
     "build": "npm run build-cpp && npm build-react",
     "start-server": "node server.js",
     "start-react": "react-scripts start",
