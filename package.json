@@ -5,14 +5,17 @@
   "main": "server.js",
   "scripts": {
     "build-cpp": "node-gyp rebuild",
+    "build-react": "react-scripts build",
+    "build": "npm run build-cpp && npm build-react",
+    "start-server": "node server.js",
+    "start-react": "react-scripts start",
     "start": "node server.js",
-    "dev": "concurrently --prefix-colors \"bgBlue.bold,bgGreen.bold\" \"npm run start\" \"npm run start:react\"",
-    "start:react": "react-scripts start",
-    "dev:frontend": "npm run start:react",
-    "build:react": "react-scripts build",
-    "setup": "npm install && npm run build-cpp",
-    "test": "node scripts/test-cpp.js",
+    "dev": "concurrently --prefix-colors \"bgBlue.bold,bgGreen.bold\" \"npm run start-server\" \"npm run start-react\"",
+    "dev-frontend": "npm run start-react",
     "clean": "rimraf build build:react"
+  },
+  "engines": {
+    "node": ">=20.0.0"
   },
   "dependencies": {
     "concurrently": "^9.2.0",
