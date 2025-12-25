@@ -15,7 +15,7 @@ RUN npm ci
 
 COPY . .
 
-RUN npm run build-
+RUN npm run build-react
 
 ENV NODE_ENV=production
 EXPOSE 3001
