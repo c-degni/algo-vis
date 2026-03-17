@@ -113,6 +113,6 @@ The architecture supports easy addition of new data structures:
 
 If you add a new DSA, please consider adding a preset of operations for said DSA so that users can have a base visualization to start with. THAT WOULD BE HEAVILY APPRECIATED :pray:! 
 
-Currently no algorithms have been implemented but they follow a similar structure to that of data structures. Certain routes will have to be added etc. but many things may already be done and commented out :wink:.
+Currently no algorithms have been implemented but they follow a similar structure to that of data structures. Certain routes will have to be added etc. but many things may already be done and commented out.
 
 Thanks for checking out Algo-Vis! Feel free to reach out to me on [github](https://github.com/c-degni), [linkedin](https://www.linkedin.com/in/christ-degni/), and/or at degnicn@mail.uc.edu.
