@@ -13,21 +13,21 @@ This project combines C++ DSA implementations with a React frontend to provide e
 - __Frontend:__ React components with D3.js visualizations and playback controls
 
 ## Project Structure
-__:electric_plug: API Layer__
+__API Layer__
 - `controllers/{DSA}Controller.js` - Business logic & validation
 - `routes/{data-structures or algorithms}.js` - HTTP endpoints & routing
 
-__:zap: C++ Core__
+__C++ Core__
 - `core/ExecutionTracer.{h,cpp}` - Records operation steps
 - `{data_structures or algorithms}/Tracked{DSA}.h` - {DSA} with execution tracing
 - `bindings/{dsa}_wrapper.cpp` - Node.js integration bridge
 
-__:star2: Frontend Components__
+__Frontend Components__
 - `shared/ExecutionPlayer.tsx` - Playback controls & timeline
 - `shared/StepBuilder.tsx` - Interactive operation builder  
 - `visualizers/{DSA}Visualizer.tsx` - D3.js stack animations
 
-__:hammer: Build System__
+__Build System__
 - `build/Release/{data_structures or algorithms}.node` - Compiled C++ addon
 - `binding.gyp` - C++ compilation configuration
 - `server.js` - Express server entry point
