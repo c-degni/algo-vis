@@ -42,7 +42,7 @@ __Build System__
 ## Quick Start
 ### Prerequisites
 - Node.js 16+
-- C++ compiler (Xcode CLI tools on macOS)
+- C++ compiler
 - Python 3.x (for node-gyp)
 
 ### Installation & Setup
